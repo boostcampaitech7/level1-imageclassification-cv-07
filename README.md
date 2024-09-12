@@ -7,3 +7,5 @@ lucky
 haha2
 
 dongjin
+
+jungyeon
