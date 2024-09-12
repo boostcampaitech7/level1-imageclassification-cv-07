@@ -6,6 +6,4 @@ lucky
 
 haha2
 
-git push check
-
-commit 
+dongjin
