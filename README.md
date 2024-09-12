@@ -5,3 +5,5 @@ hi
 lucky
 
 haha2
+
+git push check
