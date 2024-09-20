@@ -59,7 +59,7 @@ def main(config):
         train_info = pd.read_csv(config['data_info_file'])
         
         # 데이터셋을 train과 valid로 나눔
-        train_df, val_df = train_test_split(train_info, test_size=0.2, stratify=train_info['target'])
+        train_df, val_df = train_test_split(train_info, test_size=0.05, stratify=train_info['target'])
 
         # 변환 설정 (albumentations 사용)
         transform_selector = TransformSelector(transform_type="albumentations")
@@ -78,9 +78,9 @@ def main(config):
         model.to(device)
 
         # 옵티마이저 및 스케줄러
-        optimizer = optim.SGD(model.parameters(), lr=config['learning_rate'], momentum=0.9)
-        scheduler = StepLR(optimizer, step_size=2 * len(train_loader), gamma=0.1)
-        loss_fn = nn.CrossEntropyLoss()
+        optimizer = optim.SGD(model.parameters(), lr=config['learning_rate'])
+        scheduler = StepLR(optimizer, step_size=2 * len(train_loader), gamma=0.5)
+        loss_fn = nn.CrossEntropyLoss(label_smoothing=0.08)
 
         # Trainer 설정
         trainer = Trainer(model, device, train_loader, val_loader, optimizer, scheduler, loss_fn, config['epochs'], config['result_path'])
