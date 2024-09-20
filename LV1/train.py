@@ -48,7 +48,10 @@ def send_slack_dm(token: str, user_id: str, message: str):
 def main(config):
     try:
         # W&B 초기화
-        wandb.init(project=config['wandb_project'], config=config)
+        wandb.init(project=config['wandb_project'], 
+                   config=config,
+                   name=f"{config['model_name']}_{config['person_name']}_{config['version']}"
+                   )
 
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -102,7 +105,7 @@ def main(config):
             trainer.save_model(epoch, val_loss)
 
             # W&B 모델 가중치 업로드
-            wandb.save(os.path.join(config['result_path'], f"model_epoch_{epoch}.pt"))
+            #wandb.save(os.path.join(config['result_path'], f"model_epoch_{epoch}.pt"))
 
             scheduler.step()
 
