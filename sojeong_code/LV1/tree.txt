@@ -1,0 +1,21 @@
+sojeong_code
+ ┗ 📂LV1
+ ┃ ┣ 📂datasets
+ ┃ ┃ ┣ 📜custom_dataset.py
+ ┃ ┃ ┗ 📜transform.py
+ ┃ ┣ 📂models
+ ┃ ┃ ┗ 📜model_selector.py
+ ┃ ┣ 📂output
+ ┃ ┣ 📂results
+ ┃ ┃ ┣ 📂coatnet_3_rw_224
+ ┃ ┃ ┃ ┣ 📜best_model_1.5477.pt
+ ┃ ┃ ┗ 📂resnet18
+ ┃ ┃ ┃ ┣ 📜best_model_2.7570.pt
+ ┃ ┣ 📂utils
+ ┃ ┃ ┗ 📜train_utils.py
+ ┃ ┣ 📜config.json
+ ┃ ┣ 📜inference.py
+ ┃ ┣ 📜inference.sh
+ ┃ ┣ 📜train.py
+ ┃ ┣ 📜train.sh
+ ┃ ┗ 📜tree.txt
