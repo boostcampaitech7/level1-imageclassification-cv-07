@@ -5,6 +5,7 @@ wandb/
 __pycache__/
 *.pyc
 results/
+output/
 
 # sj
 config_sj.json
