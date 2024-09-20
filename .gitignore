@@ -17,6 +17,8 @@ train_sj.sh
 
 # dj
 **/.env
+config_dj.json
+train_dj.sh
 
 # js
 
