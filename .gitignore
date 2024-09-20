@@ -20,7 +20,7 @@ train_sj.sh
 # dj
 config_dj.json
 train_dj.sh
-
+run_scripts
 # js
 
 # sc
