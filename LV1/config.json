@@ -3,7 +3,7 @@
   "test_data_dir": "/data/ephemeral/home/data/test",  
   "data_info_file": "/data/ephemeral/home/data/train.csv",
   "result_path": "/data/ephemeral/home/Sojeong/level1-imageclassification-cv-07/LV1/results",
-  "model_name": "resnet50",
+  "model_name": "coatnet_2_rw_224",
   "output_path": "/data/ephemeral/home/Sojeong/level1-imageclassification-cv-07/LV1/output/predictions.csv",
   "epochs": 1,
   "batch_size": 32,
@@ -12,5 +12,5 @@
   "test_info_file": "/data/ephemeral/home/data/test.csv",
   "slack_token": "your token",
   "slack_user_id": "your id",
-  "wandb_project": "resnent50_sj_v1" 
+  "wandb_project": "coatnet_2_sj_v1" 
 }
