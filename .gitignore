@@ -1,8 +1,13 @@
 data/
 baseline/
 sojeong_code/
+wandb/
+__pycache__/
+*.pyc
 
 # sj
+config_sj.json
+train_sj.sh
 
 # jy
 
