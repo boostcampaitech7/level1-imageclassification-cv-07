@@ -4,6 +4,7 @@ sojeong_code/
 wandb/
 __pycache__/
 *.pyc
+results/
 
 # sj
 config_sj.json

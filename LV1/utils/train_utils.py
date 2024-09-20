@@ -35,12 +35,21 @@ class Trainer:
                 os.remove(path_to_remove)
                 print(f"Model at {path_to_remove} removed due to exceeding the model limit.")
 
-        # 가장 낮은 손실 모델을 별도로 저장
+        # 가장 낮은 손실 모델을 별도로 저장 (기존 best_model이 있으면 삭제)
+        best_model_path = os.path.join(self.result_path, f'best_model_{loss:.4f}.pt')
+
         if loss < self.lowest_loss:
+            # 기존 best_model 파일 삭제
+            previous_best_model_path = os.path.join(self.result_path, f'best_model_{self.lowest_loss:.4f}.pt')
+            if os.path.exists(previous_best_model_path):
+                os.remove(previous_best_model_path)
+                print(f"Previous best model {previous_best_model_path} removed.")
+
+            # 새로운 best_model 저장
             self.lowest_loss = loss
-            best_model_path = os.path.join(self.result_path, f'best_model_{loss:.4f}.pt')
             torch.save(self.model.state_dict(), best_model_path)
             print(f"New best model saved at {best_model_path} with loss = {loss:.4f}")
+
             
     # 훈련 함수 (train_epoch)
     def train_epoch(self):
