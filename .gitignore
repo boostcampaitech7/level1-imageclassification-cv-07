@@ -1,6 +1,5 @@
 data/
 baseline/
-sojeong_code/
 wandb/
 __pycache__/
 *.pyc
