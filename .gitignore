@@ -1,4 +1,15 @@
-data/
+wandb/
+__pycache__/
+*.pyc
+results/
+output/
+**/.env
+.vscode
+config_sj.json
+train_sj.sh
+config_dj.json
+train_dj.sh
 baseline/
+data/
 train_result/
-LV1/
+Lv1/
