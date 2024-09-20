@@ -5,6 +5,8 @@ __pycache__/
 *.pyc
 results/
 output/
+**/.env
+.vscode
 
 # sj
 config_sj.json
@@ -15,6 +17,8 @@ train_sj.sh
 # jh
 
 # dj
+config_dj.json
+train_dj.sh
 
 # js
 
