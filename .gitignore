@@ -1,0 +1,27 @@
+data/
+baseline/
+sojeong_code/
+wandb/
+__pycache__/
+*.pyc
+results/
+output/
+**/.env
+.vscode
+dongjin_code/
+
+# sj
+config_sj.json
+train_sj.sh
+
+# jy
+
+# jh
+
+# dj
+config_dj.json
+train_dj.sh
+run_scripts
+# js
+
+# sc
