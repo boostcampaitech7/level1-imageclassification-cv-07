@@ -10,6 +10,7 @@ class CustomDataset(Dataset):
         self.root_dir = root_dir
         self.transform = transform
         self.is_inference = is_inference
+        self.info_df_indices = info_df.index.tolist()
         self.image_paths = info_df['image_path'].tolist()
 
         if not self.is_inference:
@@ -28,4 +29,4 @@ class CustomDataset(Dataset):
             return image
         else:
             target = self.targets[index]
-            return image, target, index
+            return image, target, self.info_df_indices[index]
