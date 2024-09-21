@@ -8,6 +8,7 @@ results/
 output/
 **/.env
 .vscode
+dongjin_code/
 
 # sj
 config_sj.json
