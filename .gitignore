@@ -5,6 +5,8 @@ results/
 output/
 **/.env
 .vscode
+**/.env
+.vscode
 config_sj.json
 train_sj.sh
 config_dj.json
