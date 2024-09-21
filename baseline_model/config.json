@@ -3,7 +3,7 @@
   "test_data_dir": "/data/ephemeral/home/data/test",  
   "data_info_file": "/data/ephemeral/home/data/train.csv",
   "result_path": "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/LV1/results/coatnet_2_rw_224",
-  "model_name": "coatnet_3_rw_224",
+  "model_name": "coatnet_2_rw_224",
   "output_path": "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/LV1/output/coatnet_2_rw_224/predictions.csv",
   "epochs": 15,
   "batch_size": 32,
