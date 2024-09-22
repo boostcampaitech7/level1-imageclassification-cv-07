@@ -14,3 +14,4 @@ config_dj.json
 train_dj.sh
 run_scripts
 result
+config_dj*.json
