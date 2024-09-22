@@ -13,3 +13,4 @@ train_sj.sh
 config_dj.json
 train_dj.sh
 run_scripts
+result
