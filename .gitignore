@@ -7,7 +7,7 @@ output/
 .vscode
 **/.env
 .vscode
-config_sj.json
+config_sj*.json
 train_sj.sh
 config_dj.json
 train_dj.sh
