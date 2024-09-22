@@ -70,8 +70,7 @@ def main(config):
     ensure_dir_exists(output_dir)
 
     # 예측 결과 저장
-    test_info['target'] = predictions
-    test_info = test_info.reset_index().rename(columns={"index": "ID"})
+    test_info['predictions'] = predictions
     test_info.to_csv(config['output_path'], index=False)
     print(f"Predictions saved to {config['output_path']}")
 

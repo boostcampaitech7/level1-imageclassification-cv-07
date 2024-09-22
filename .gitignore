@@ -1,6 +1,3 @@
-data/
-baseline/
-sojeong_code/
 wandb/
 __pycache__/
 *.pyc
@@ -8,8 +5,20 @@ results/
 output/
 **/.env
 .vscode
+**/.env
+.vscode
 config_sj.json
 train_sj.sh
 config_dj.json
 train_dj.sh
+baseline/
+data/
+train_result/
+Lv1/
+sojeong_code/
+*.png
+*.jpeg
+
 run_scripts
+result
+config_dj*.json
