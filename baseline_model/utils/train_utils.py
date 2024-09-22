@@ -94,7 +94,6 @@ class Trainer:
         return avg_loss, accuracy
 
     # 검증 함수 (validate)
-    # 검증 함수 (validate)
     def validate(self):
         self.model.eval()
         total_loss = 0.0
