@@ -17,6 +17,7 @@ class AlbumentationsTransform:
                     A.HorizontalFlip(p=0.5),
                     A.Rotate(limit=15),
                     A.RandomBrightnessContrast(p=0.2),
+                    #A.CoarseDropout(max_holes=8, max_height=32, max_width=32, min_holes=1, min_height=16, min_width=16, p=1.0), # coarseDropout 추가 
                 ] + common_transforms
             )
         else:
@@ -63,3 +64,5 @@ class TransformSelector:
             return AlbumentationsTransform(is_train=is_train)
         elif self.transform_type == "torchvision":
             return TorchvisionTransform(is_train=is_train)
+
+
