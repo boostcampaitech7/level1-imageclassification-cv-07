@@ -49,14 +49,6 @@ Notion 🔥
     <td align="center" valign="top" width="12%"><a href="https://github.com/cyndii20"><img src="https://avatars.githubusercontent.com/u/90389093?v=4"></a></td>
   </tr>
   <tr>
-    <td align="center" valign="top"><a href = "https://github.com/5jisoo">이동진</a><br>Backend Developer</td>
-    <td align="center" valign="top"><a href = "https://github.com/dudrhy12">정지환</a><br>Backend Developer</td>
-    <td align="center" valign="top"><a href = "https://github.com/dudrhy12">유정선</a><br>Backend Developer</td>
-    <td align="center" valign="top"><a href = "https://github.com/dudrhy12">신승철</a><br>Backend Developer</td>
-    <td align="center" valign="top"><a href = "https://github.com/dudrhy12">김소정</a><br>Backend Developer</td>
-    <td align="center" valign="top"><a href = "https://github.com/dudrhy12">서정연</a><br>Backend Developer</td>
-  </tr>
-  <tr>
     <td valign="top"> <!-- 동진 -->
         <ul>
             <li>각자 역할</li>
