@@ -118,8 +118,8 @@ class Trainer:
 
     def classifier_unfreeze_layers(self, model):
         for name, param in model.named_parameters():
-            if 'classifier' in name:
-                param.requires_grad = True
+            if 'head' in name:
+                param.requires_grad = True  # classifier만 학습
             else:
                 param.requires_grad = False
                 # freeze된 파라미터 확인
