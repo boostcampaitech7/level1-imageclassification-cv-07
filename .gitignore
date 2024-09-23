@@ -18,6 +18,7 @@ Lv1/
 sojeong_code/
 *.png
 *.jpeg
+config_vgg.json
 
 run_scripts
 result

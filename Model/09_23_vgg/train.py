@@ -50,7 +50,8 @@ def main(config):
         # W&B 초기화
         wandb.init(project=config['wandb_project'], 
                    config=config,
-                   name=f"{config['model_name']}_{config['person_name']}_{config['version']}"
+                   name=f"{config['model_name']}_{config['person_name']}_{config['version']}",
+                   entity='luckyvicky'
                    )
 
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
