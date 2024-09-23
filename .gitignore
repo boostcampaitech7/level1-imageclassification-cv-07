@@ -25,3 +25,7 @@ baseline_model/
 
 *.png
 *.jpeg
+
+run_scripts
+result
+config_dj*.json
