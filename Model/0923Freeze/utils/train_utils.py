@@ -100,11 +100,39 @@ class Trainer:
         y_a, y_b = y, y[index]
         return x, y_a, y_b, lam
 
+    def freeze_model_layers(self, model):
+        for name, param in model.named_parameters():
+            # stem, stage 동결
+            if 'stem' in name or 'stages.0' in name or 'stages.1' in name:
+                param.requires_grad = False # early layer freeze
+            else:
+                param.requires_grad = True # unfrozen
 
+        # # freeze된 파라미터 확인
+        # for name, param in model.named_parameters():
+        #     if not param.requires_grad:
+        #         print(f"Frozen layer: {name}")
+        #     else:
+        #         print(f"Unfrozen layer: {name}")
+        # print("here")
+
+    def classifier_unfreeze_layers(self, model):
+        for name, param in model.named_parameters():
+            if 'classifier' in name:
+                param.requires_grad = True
+            else:
+                param.requires_grad = False
+                # freeze된 파라미터 확인
+        for name, param in model.named_parameters():
+            if not param.requires_grad:
+                print(f"Frozen layer: {name}")
+            else:
+                print(f"Unfrozen layer: {name}")
+        print("here")
 
             
     # 훈련 함수 (train_epoch)
-    def train_epoch(self, use_cutmix=False, use_mixup=False, alpha=1.0):
+    def train_epoch(self, use_cutmix="False", use_mixup="False", alpha=1.0):
         self.model.train()
         total_loss = 0.0
         correct = 0
@@ -117,9 +145,9 @@ class Trainer:
             images, targets = images.to(self.device), targets.to(self.device)
             
             # CutMix 또는 MixUp 적용
-            if use_cutmix:
+            if use_cutmix == 'True':
                 images, targets_a, targets_b, lam = self.cutmix_data(images, targets, alpha)
-            elif use_mixup:
+            elif use_mixup == 'True':
                 images, targets_a, targets_b, lam = self.mixup_data(images, targets, alpha)
 
             # 옵티마이저 초기화
@@ -129,7 +157,7 @@ class Trainer:
             outputs = self.model(images)
             
             # 손실 계산
-            if use_cutmix or use_mixup:
+            if use_cutmix == 'True' or use_mixup == 'True':
                 loss = lam * self.loss_fn(outputs, targets_a) + (1 - lam) * self.loss_fn(outputs, targets_b)
             else:
                 loss = self.loss_fn(outputs, targets)
@@ -191,10 +219,15 @@ class Trainer:
         
         return avg_loss, accuracy
 
-    def train(self):
-        for epoch in range(self.epochs):
-            train_loss, train_acc = self.train_epoch()
-            val_loss, val_acc = self.validate()
-            self.scheduler.step()
-            print(f"Epoch {epoch+1}/{self.epochs}, Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.4f}, "
-                  f"Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.4f}")
+    # def train(self):
+    #     for epoch in range(self.epochs):
+    #         print('epoch')
+    #         # epoch 5까지는 freeze layer
+    #         if epoch < 5:
+    #             self.freeze_model_layers(self.model)
+                
+    #         train_loss, train_acc = self.train_epoch()
+    #         val_loss, val_acc = self.validate()
+    #         self.scheduler.step()
+    #         print(f"Epoch {epoch+1}/{self.epochs}, Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.4f}, "
+    #               f"Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.4f}")
