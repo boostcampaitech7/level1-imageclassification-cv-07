@@ -1,5 +1,5 @@
 #!/bin/bash
-python /data/ephemeral/home/Seungcheol/level1-imageclassification-cv-07/LV1/inference.py --config /data/ephemeral/home/Seungcheol/level1-imageclassification-cv-07/LV1/config.json
+python /data/ephemeral/home/Jungyeon/level1-imageclassification-cv-07/Model/0923_skf_analysis/inference.py --config /data/ephemeral/home/Jungyeon/level1-imageclassification-cv-07/Model/0923_skf_analysis/config.json
 
-# chmod +x /data/ephemeral/home/Seungcheol/level1-imageclassification-cv-07/LV1/inference.sh
-# /data/ephemeral/home/Seungcheol/level1-imageclassification-cv-07/LV1/inference.sh
+# chmod +x /data/ephemeral/home/Jungyeon/level1-imageclassification-cv-07/Model/0923_skf_analysis/inference.sh
+# /data/ephemeral/home/Jungyeon/level1-imageclassification-cv-07/Model/0923_skf_analysis/inference.sh

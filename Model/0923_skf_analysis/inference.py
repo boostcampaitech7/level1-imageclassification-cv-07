@@ -9,28 +9,32 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 import argparse
 
-# 추론(inference) 함수
-def inference(model, device, test_loader):
-    model.eval()
-    predictions = []
-    with torch.no_grad():
-        for images in tqdm(test_loader, desc="Inference"):
-            images = images.to(device)
-            outputs = model(images)
-            preds = torch.argmax(outputs, dim=1)
-            predictions.extend(preds.cpu().numpy())
-    return predictions
+# 추론(inference) 함수 + 앙상블 예측
+def ensemble_predict(models, device, test_loader):
+    predictions = np.zeros((len(dataloader.dataset), 500)) # 예측값을 저장할 배열을 초기화
+
+    for model in models:
+        model.eval()
+        with torch.no_grad():
+            fold_predictions = [] # 각 모델의 예측값을 저장할 리스트를 초기화
+            for X, _ in dataloader:
+                X = X.to(device)
+                pred = model(X)
+                fold_predictions.append(pred.cpu().numpy())
+            fold_predictions = np.concatenate(fold_predictions, axis=0) # 예측값을 합산하여 앙상블
+            predictions += fold_predictions
+    return predictions # 최종 예측값 반환
 
 # 'best_model' 파일을 찾는 함수 (가장 최근에 저장된 파일 선택)
-def get_best_model_path(directory):
-    files = [f for f in os.listdir(directory) if f.startswith('best_model') and f.endswith('.pt')]
+def get_model_paths(directory):
+    files = [f for f in os.listdir(directory) if f.startswith('model_epoch') and f.endswith('.pt')]
     if not files:
         raise FileNotFoundError(f"No best model files found in directory: {directory}")
     
     # 파일의 수정 시간을 기준으로 가장 최근에 저장된 파일 선택
-    best_file = max(files, key=lambda f: os.path.getmtime(os.path.join(directory, f)))
-    return os.path.join(directory, best_file)
-
+    # best_file = max(files, key=lambda f: os.path.getmtime(os.path.join(directory, f)))
+    paths = [os.path.join(directory, f) for f in files]
+    return paths
 # 디렉터리가 없으면 생성하는 함수
 def ensure_dir_exists(directory):
     if not os.path.exists(directory):
@@ -54,16 +58,19 @@ def main(config):
     model_selector = ModelSelector(model_type="timm", num_classes=config['num_classes'], model_name=config['model_name'], pretrained=False)
     model = model_selector.get_model()
 
-    # 베스트 모델 경로 설정
-    model_path = get_best_model_path(config['result_path'])
-    print(f"Loading best model from {model_path}")
+    # # 베스트 모델 경로 설정
+    model_paths = get_model_paths(config['result_path'])
+    print(f"Loading models from {model_paths}")
 
-    # 저장된 모델 로드
-    model.load_state_dict(torch.load(model_path, map_location=device))
-    model.to(device)
+    # # 저장된 모델 로드
+    models = []
+    for model_path in model_paths:
+        model.load_state_dict(torch.load(model_path, map_location=device))
+        model.to(device)
+        models.append(model)
 
     # 추론 실행
-    predictions = inference(model, device, test_loader)
+    test_predictions = ensemble_predict(models, test_dataloader, device)
 
     # 결과 저장 디렉터리 확인 및 생성
     output_dir = os.path.dirname(config['output_path'])

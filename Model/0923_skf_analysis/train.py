@@ -15,6 +15,9 @@ import wandb  # W&B 추가
 from sklearn.model_selection import train_test_split
 import os
 import traceback  # 오류 스택 트레이스를 캡처하기 위한 모듈
+from sklearn.model_selection import StratifiedKFold
+from torch.utils.data import Subset
+
 
 
 # Slack 알림 함수 (DM용)
@@ -60,56 +63,69 @@ def main(config):
         # 데이터 로드
         train_info = pd.read_csv(config['data_info_file'])
         
-        # 데이터셋을 train과 valid로 나눔
-        train_df, val_df = train_test_split(train_info, test_size=0.1, stratify=train_info['target'])
+        # StratifiedKFold 설정
+        n_splits = 5
+        skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=42)
 
-        # 변환 설정 (albumentations 사용)
-        transform_selector = TransformSelector(transform_type="albumentations")
-        train_transform = transform_selector.get_transform(is_train=True)
-        val_transform = transform_selector.get_transform(is_train=False)
+        labels = [ ]
+        for data in train_info['target']:
+            labels.append(data)
+            
+        for fold, (train_idx, val_idx) in enumerate(skf.split(train_info, labels)):
+            print(f'Fold {fold+1}')
 
-        # 데이터셋 및 데이터로더 생성 (train, valid)
-        train_dataset = CustomDataset(root_dir=config['train_data_dir'], info_df=train_df, transform=train_transform)
-        val_dataset = CustomDataset(root_dir=config['train_data_dir'], info_df=val_df, transform=val_transform)
-        train_loader = DataLoader(train_dataset, batch_size=config['batch_size'], shuffle=True)
-        val_loader = DataLoader(val_dataset, batch_size=config['batch_size'], shuffle=False)
+            # train_idx와 val_idx에 따른 학습 및 검증 데이터 분리
+            train_subset = train_info.iloc[train_idx].reset_index(drop=True)
+            val_subset = train_info.iloc[val_idx].reset_index(drop=True)
+            
+            # 변환 설정 (albumentations 사용)
+            transform_selector = TransformSelector(transform_type="albumentations")
+            train_transform = transform_selector.get_transform(is_train=True)
+            val_transform = transform_selector.get_transform(is_train=False)
 
-        # 모델 설정
-        model_selector = ModelSelector(model_type="timm", num_classes=len(train_info['target'].unique()), model_name=config['model_name'], pretrained=True)
-        model = model_selector.get_model()
-        model.to(device)
+            # CustomDataset 생성
+            train_dataset = CustomDataset(root_dir=config['train_data_dir'], info_df=train_subset, transform=train_transform)
+            val_dataset = CustomDataset(root_dir=config['train_data_dir'], info_df=val_subset, transform=val_transform)
 
-        # 옵티마이저 및 스케줄러[]
-        optimizer = optim.Adam(model.parameters(), lr=config['learning_rate'])
-        scheduler = StepLR(optimizer, step_size=2 * len(train_loader), gamma=0.5)
-        loss_fn = nn.CrossEntropyLoss(label_smoothing=0.08)
+            # DataLoader 생성
+            train_dataloader = DataLoader(train_dataset, batch_size=config['batch_size'], shuffle=True)
+            val_dataloader = DataLoader(val_dataset, batch_size=config['batch_size'], shuffle=False)
 
-        # Trainer 설정
-        trainer = Trainer(model, device, train_loader, val_loader, optimizer, scheduler, loss_fn, config['epochs'], config['result_path'])
+            # 모델 생성 및 학습
+            model_selector = ModelSelector(model_type="timm", num_classes=len(train_info['target'].unique()), model_name=config['model_name'], pretrained=True)
+            model = model_selector.get_model()
+            model.to(device)
 
-        # 학습 과정에서 W&B 로깅 추가
-        for epoch in range(config['epochs']):
-            print(f"Epoch {epoch+1}/{config['epochs']}")
-            train_loss, train_acc = trainer.train_epoch()
-            val_loss, val_acc = trainer.validate()
+            # 옵티마이저 + scheduler
+            optimizer = optim.Adam(model.parameters(), lr=config['learning_rate'])
+            scheduler = StepLR(optimizer, step_size=2 * len(train_dataloader), gamma=0.5)
+            loss_fn = nn.CrossEntropyLoss(label_smoothing=0.08)
 
-            # W&B에 로그 기록
-            wandb.log({
-                "epoch": epoch + 1,
-                "train_loss": train_loss,
-                "train_accuracy": train_acc,
-                "val_loss": val_loss,
-                "val_accuracy": val_acc,
-                "learning_rate": optimizer.param_groups[0]['lr']
-            })
+            # Trainer 설정
+            trainer = Trainer(model, device, train_dataloader, val_dataloader, optimizer, scheduler, loss_fn, config['epochs'], config['result_path'])
+            
+            # 학습 과정에서 W&B 로깅 추가
+            for epoch in range(config['epochs']):
+                print(f"Epoch {epoch+1}/{config['epochs']}")
+                train_loss, train_acc = trainer.train_epoch()
+                val_loss, val_acc = trainer.validate()
 
-            # 모델 저장
-            trainer.save_model(epoch, val_loss)
+                # W&B에 로그 기록
+                wandb.log({
+                    "epoch": epoch + 1,
+                    "train_loss": train_loss,
+                    "train_accuracy": train_acc,
+                    "val_loss": val_loss,
+                    "val_accuracy": val_acc,
+                    "learning_rate": optimizer.param_groups[0]['lr']
+                })
 
-            # W&B 모델 가중치 업로드
-            #wandb.save(os.path.join(config['result_path'], f"model_epoch_{epoch}.pt"))
+                # 모델 저장
+                trainer.save_model(fold, epoch, val_loss)
 
-            scheduler.step()
+                # W&B 모델 가중치 업로드
+                #wandb.save(os.path.join(config['result_path'], f"model_epoch_{epoch}.pt"))
+
 
         # 학습 완료 후 Slack DM 전송
         slack_token = config['slack_token']
