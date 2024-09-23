@@ -1,9 +1,13 @@
-CV_07
+# Sketch image classification
 
-hi
+## 프로젝트 개요
 
-lucky
+### 프로젝트 팀 구성 및 역할
 
-haha2
+### EDA
 
-dongjin
+### 실험 과정
+
+### 실험 결과
+
+### 

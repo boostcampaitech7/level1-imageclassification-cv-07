@@ -2,17 +2,20 @@
   "train_data_dir": "/data/ephemeral/home/data/train",       
   "test_data_dir": "/data/ephemeral/home/data/test",  
   "data_info_file": "/data/ephemeral/home/data/train.csv",
-  "result_path": "/data/ephemeral/home/Jeongseon/level1-imageclassification-cv-07/LV1/results",
-  "model_name": "coatnet_2_rw_224",
-  "output_path": "/data/ephemeral/home/Jeongseon/level1-imageclassification-cv-07/LV1/output/predictions.csv",
+  "result_path": "/data/ephemeral/home/Jeongseon/level1-imageclassification-cv-07/baseline_model/results/coatnet3_v2",
+  
+  "model_name": "coatnet_3_rw_224",
+  "output_path": "/data/ephemeral/home/Jeongseon/level1-imageclassification-cv-07/baseline_model/output/coatnet3_v2/predictions.csv",
   "epochs": 15,
   "batch_size": 32,
   "learning_rate": 0.005,
   "num_classes": 500,
   "test_info_file": "/data/ephemeral/home/data/test.csv",
-  "slack_token": "xoxb-3675348806454-7780614544096-btk9leGGsVffObfohxtIL0gp",
-  "slack_user_id": "U07EJ5C6EQ4",
-  "wandb_project": "coatnet_2_js_v1" 
+  "slack_token": "SLACK_TOKEN",
+  "slack_user_id": "SLACK_ID",
+  "wandb_project": "sketch_classification",
+  "version": "v2",
+  "person_name": "js"
 }
 
   
