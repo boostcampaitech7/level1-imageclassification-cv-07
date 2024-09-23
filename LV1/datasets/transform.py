@@ -7,7 +7,8 @@ from torchvision import transforms
 class AlbumentationsTransform:
     def __init__(self, is_train: bool = True):
         common_transforms = [
-            A.Resize(224, 224),
+            A.Resize(299, 299),
+            A.Normalize(mean=[0.865, 0.865, 0.865], std=[0.26, 0.26, 0.26]),
             A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
             ToTensorV2()
         ]
@@ -15,8 +16,13 @@ class AlbumentationsTransform:
             self.transform = A.Compose(
                 [
                     A.HorizontalFlip(p=0.5),
+                    #A.VerticalFlip(p=0.5),
                     A.Rotate(limit=15),
-                    A.RandomBrightnessContrast(p=0.2),
+                    #A.Affine(scale=(0.8, 1.2), shear=(-10, 10), p=0.2),
+                    #A.ElasticTransform(alpha=1, sigma=10, alpha_affine=10, p=0.2),
+                    #A.GaussNoise(var_limit=(2.0, 10.0), p=0.5),
+                    #A.CoarseDropout(max_holes=8, max_height=16, max_width=16, fill_value=255, p=0.2)
+                    #A.RandomBrightnessContrast(p=0.2)
                 ] + common_transforms
             )
         else:
