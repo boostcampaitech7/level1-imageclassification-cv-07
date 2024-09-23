@@ -64,11 +64,7 @@ class AlbumentationsTransform:
                     A.Rotate(limit=15),
                     A.ToGray(p=0.5),  # Grayscale 변환 추가
                     A.CoarseDropout(max_holes=8, max_height=16, max_width=16, fill_value=255, p=0.5),
-                    
-                    # 실험 1 :
                     A.Compose([A.Morphological(p=1, scale=(2, 3), operation='erosion')], p=1), # erosion
-
-                    # 실험 2 :
                     A.ElasticTransform(alpha=2.0, sigma=0.1, p=0.5)
                 ] + common_transforms
             )
