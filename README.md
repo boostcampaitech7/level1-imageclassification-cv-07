@@ -25,8 +25,8 @@ Notion 🔥
 랩업 리포트 PPT⭐
 
 
-🐋Model
-
+## 🐋Model
+모델 설명
 
 
 ## ⭐File Tree
