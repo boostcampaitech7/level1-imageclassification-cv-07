@@ -17,6 +17,7 @@ import json
 import utils.utils
 from dotenv import load_dotenv
 import subprocess
+import csv
 
 
 # 메인 학습 함수
@@ -71,15 +72,25 @@ def main(exp, config):
             train_loss, train_acc = trainer.train_epoch()
             val_loss, val_acc = trainer.validate()
 
-            # W&B에 로그 기록
-            wandb.log({
+            log = {
                 "epoch": epoch + 1,
                 "train_loss": train_loss,
                 "train_accuracy": train_acc,
                 "val_loss": val_loss,
                 "val_accuracy": val_acc,
                 "learning_rate": optimizer.param_groups[0]['lr']
-            })
+            }
+            
+            # W&B에 로그 기록
+            wandb.log(log)
+
+            # 텍스트 파일에 기록
+            if (epoch == 0):
+                f = open(exp['log_path'], "w")
+                log_writer = csv.DictWriter(f, log.keys())
+                log_writer.writeheader()
+
+            log_writer.writerow(log)
 
             # 모델 저장
             trainer.save_model(epoch, val_loss, exp['num_model_save'])
@@ -90,6 +101,8 @@ def main(exp, config):
         # 학습 완료 후 Slack DM 전송
         message = f"모델 학습이 완료되었습니다! Model: {exp['model_name']}, Epochs: {exp['epochs']}, Batch Size: {exp['batch_size']}"
         config['slack'].send_dm(message)
+        # 로그 스트림 닫기
+        f.close()
 
     except Exception as e:
         # 오류 메시지를 슬랙으로 전송

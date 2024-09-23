@@ -8,10 +8,12 @@ import utils.utils
 import subprocess
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Train model using config file")
-    parser.add_argument('--config', type=str, required=True, help='Path to config file')
-    args = parser.parse_args()
-    exp_file_path = args.config
+    # parser = argparse.ArgumentParser(description="Train model using config file")
+    # parser.add_argument('--config', type=str, required=True, help='Path to config file')
+    # args = parser.parse_args()
+    # exp_file_path = args.config
+
+    exp_file_path = "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0923_model/exp/exp1.json"
 
     with open(exp_file_path, 'r') as f:
         exp = json.load(f)

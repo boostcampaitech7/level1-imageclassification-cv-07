@@ -48,8 +48,9 @@ def create_path(exp):
     exp['result_path'] = result_path
     exp['result_fold'] = result_fold
     exp['output_path'] = os.path.join(result_path, f"{result_fold}_predict.csv")
+    exp['log_path'] = os.path.join(result_path, f"{result_fold}_log.csv")
 
-    os.mkdir(result_path)
+    os.makedirs(result_path)
     with open(exp_path, 'w') as f:
         json.dump(exp, f, indent=4)
 
