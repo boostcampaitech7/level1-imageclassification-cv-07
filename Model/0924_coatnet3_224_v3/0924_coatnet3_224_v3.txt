@@ -1,2 +1,2 @@
 모델 조작 : 앙상블, cross vallidation 등
-
+coatnet3_224 사용

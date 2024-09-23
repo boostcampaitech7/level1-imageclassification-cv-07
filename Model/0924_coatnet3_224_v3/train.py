@@ -70,9 +70,9 @@ def main(config):
         #train_index_path = os.path.join(py_dir_path, rel_train_index_path)
         #val_index_path = os.path.join(py_dir_path, rel_val_index_path)
 
-        # # # train_index.csv와 val_index.csv 저장
-        # # train_df.index.to_series().to_csv(train_index_path, index = False, header = False)
-        # # val_df.index.to_series().to_csv(val_index_path, index = False, header = False)
+        # # train_index.csv와 val_index.csv 저장
+        # train_df.index.to_series().to_csv(train_index_path, index = False, header = False)
+        # val_df.index.to_series().to_csv(val_index_path, index = False, header = False)
 
         # train_index.csv와 val_index.csv를 이용하여 train_df와 val_df를 로드       
         #train_index = pd.read_csv(train_index_path, header = None).squeeze()
@@ -108,10 +108,7 @@ def main(config):
         # 학습 과정에서 W&B 로깅 추가
         for epoch in range(config['epochs']):
             print(f"Epoch {epoch+1}/{config['epochs']}")
-            #train_loss, train_acc = trainer.train_epoch()
-            
-            ### cutmix, mixup 추가
-            train_loss, train_acc = trainer.train_epoch(use_cutmix=config['cutmix'], use_mixup=config['mixup'], alpha=0.25)
+            train_loss, train_acc = trainer.train_epoch()
             val_loss, val_acc = trainer.validate()
 
             # W&B에 로그 기록
@@ -130,7 +127,7 @@ def main(config):
             # W&B 모델 가중치 업로드
             #wandb.save(os.path.join(config['result_path'], f"model_epoch_{epoch}.pt"))
 
-            scheduler.step()
+            #scheduler.step()
 
         # 학습 완료 후 Slack DM 전송
         slack_token = config['slack_token']
