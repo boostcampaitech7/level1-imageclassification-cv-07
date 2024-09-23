@@ -116,7 +116,7 @@ class Trainer:
         #         print(f"Unfrozen layer: {name}")
         # print("here")
 
-    def classifier_unfreeze_layers(self, model):
+    def classifier_unfreeze_layer(self, model):
         for name, param in model.named_parameters():
             if 'head' in name:
                 param.requires_grad = True  # classifier만 학습
