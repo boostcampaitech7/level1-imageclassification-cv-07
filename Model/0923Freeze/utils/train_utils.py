@@ -103,7 +103,7 @@ class Trainer:
     def freeze_model_layers(self, model):
         for name, param in model.named_parameters():
             # stem, stage 동결
-            if 'stem' in name or 'stages.0' or 'stages.1' in name:
+            if 'stem' in name or 'stages.0' in name or 'stages.1' in name:
                 param.requires_grad = False # early layer freeze
             else:
                 param.requires_grad = True # unfrozen
