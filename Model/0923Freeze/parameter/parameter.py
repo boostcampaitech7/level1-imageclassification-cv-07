@@ -21,6 +21,19 @@ def main(config):
     print(model)  
     print(f"Total Parameters: {num_params:,}")  
     print(f"Trainable Parameters: {trainable_params:,}") 
+    
+    # 파일을 저장할 경로
+    file_path = '/data/ephemeral/home/Sojeong/level1-imageclassification-cv-07/baseline_model/coatnet3_parameter.txt'  
+
+    # 파일 열기 (쓰기 모드)
+    with open(file_path, 'w') as f:
+        i = 0
+        for name, param in model.named_parameters():
+            # 출력 대신 파일에 쓰기
+            f.write(f"{i}: {name}\n")
+            i += 1
+
+    print(f"결과가 {file_path}에 저장되었습니다.")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Model parameter analysis using config file")
@@ -35,4 +48,4 @@ if __name__ == "__main__":
     main(config)
 
     
-# python /data/ephemeral/home/Sojeong/level1-imageclassification-cv-07/sojeong_code/LV1/parameter.py --config /data/ephemeral/home/Sojeong/level1-imageclassification-cv-07/sojeong_code/LV1/config.json
+# python /data/ephemeral/home/Sojeong/level1-imageclassification-cv-07/baseline_model/parameter.py --config /data/ephemeral/home/Sojeong/level1-imageclassification-cv-07/baseline_model/config_sj.json
