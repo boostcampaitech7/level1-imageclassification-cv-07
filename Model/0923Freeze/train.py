@@ -134,7 +134,7 @@ def main(config):
             # W&B 모델 가중치 업로드
             #wandb.save(os.path.join(config['result_path'], f"model_epoch_{epoch}.pt"))
 
-            scheduler.step()
+            #scheduler.step()
 
         # 학습 완료 후 Slack DM 전송
         slack_token = config['slack_token']

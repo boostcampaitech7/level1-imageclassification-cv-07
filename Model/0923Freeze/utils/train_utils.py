@@ -166,6 +166,7 @@ class Trainer:
             # 역전파 및 옵티마이저 스텝
             loss.backward()
             self.optimizer.step()
+            self.scheduler.step()
             
             # 배치 손실 및 정확도 계산
             total_loss += loss.item()
@@ -218,16 +219,3 @@ class Trainer:
         print(f"Validation Epoch Average Loss: {avg_loss:.4f}, Accuracy: {accuracy:.4f}")
         
         return avg_loss, accuracy
-
-    # def train(self):
-    #     for epoch in range(self.epochs):
-    #         print('epoch')
-    #         # epoch 5까지는 freeze layer
-    #         if epoch < 5:
-    #             self.freeze_model_layers(self.model)
-                
-    #         train_loss, train_acc = self.train_epoch()
-    #         val_loss, val_acc = self.validate()
-    #         self.scheduler.step()
-    #         print(f"Epoch {epoch+1}/{self.epochs}, Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.4f}, "
-    #               f"Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.4f}")
