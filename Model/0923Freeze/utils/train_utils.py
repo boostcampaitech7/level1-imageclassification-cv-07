@@ -129,7 +129,7 @@ class Trainer:
             else:
                 print(f"Unfrozen layer: {name}")
         print("here")
-        import IPython; IPython.embed(colors='Linux');exit(1);
+
             
     # 훈련 함수 (train_epoch)
     def train_epoch(self, use_cutmix="False", use_mixup="False", alpha=1.0):
