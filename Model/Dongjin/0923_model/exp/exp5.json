@@ -1,0 +1,15 @@
+{
+    "output_fold_path_format": "result/{model_name}_{optimizer}_{learning_rate}",
+    "model_name": "efficientnetv2_s",
+    "optimizer": "Adam",
+    "epochs": 15,
+    "batch_size": 32,
+    "learning_rate": 0.001,
+    "num_classes": 500,
+    "label_smoothing": 0.08,
+    "StepLR_step_size": 2,
+    "stepLR_gamma": 0.5,
+    "num_model_save": 1,
+    "version": "v1",
+    "person_name": "dj"
+}

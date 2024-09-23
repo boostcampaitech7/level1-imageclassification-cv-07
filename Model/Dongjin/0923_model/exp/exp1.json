@@ -12,8 +12,8 @@
     "num_model_save": 1,
     "version": "v1",
     "person_name": "dj",
-    "result_path": "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0923_model/result/efficientnet_b0_Adam_0.001",
-    "result_fold": "efficientnet_b0_Adam_0.001",
-    "output_path": "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0923_model/result/efficientnet_b0_Adam_0.001/efficientnet_b0_Adam_0.001_predict.csv",
-    "log_path": "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0923_model/result/efficientnet_b0_Adam_0.001/efficientnet_b0_Adam_0.001_log.csv"
+    "result_path": "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0923_model/result/efficientnet_b0_Adam_0.001_1",
+    "result_fold": "efficientnet_b0_Adam_0.001_1",
+    "output_path": "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0923_model/result/efficientnet_b0_Adam_0.001_1/efficientnet_b0_Adam_0.001_1_predict.csv",
+    "log_path": "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0923_model/result/efficientnet_b0_Adam_0.001_1/efficientnet_b0_Adam_0.001_1_log.csv"
 }
