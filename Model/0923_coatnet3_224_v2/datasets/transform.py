@@ -18,7 +18,7 @@ class AlbumentationsTransform:
         common_transforms = [
             A.Resize(224, 224),
             #A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-            A.Normalize(mean=[0.861, 0.861, 0.861], std=[0.253, 0.253, 0.253]),
+            A.Normalize(mean=[0.861, 0.861, 0.861], std=[0.229, 0.224, 0.225]),
             ToTensorV2() #자동 스케일 X, cf) ToTensor()는 자동 스케일링
         ]
         if is_train:
