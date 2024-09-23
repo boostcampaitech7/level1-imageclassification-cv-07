@@ -60,8 +60,9 @@ def main(config):
         train_info = pd.read_csv(config['data_info_file'])
         
         # # 데이터셋을 train과 valid로 나눔 
-        # train_df, val_df = train_test_split(train_info, test_size=0.2, stratify=train_info['target'])
+        train_df, val_df = train_test_split(train_info, test_size=0.2, stratify=train_info['target'])
 
+        """
         # train_index.csv와 val_index.csv 경로
         py_dir_path = os.path.dirname(os.path.abspath(__file__))
         rel_train_index_path = os.path.normpath("datasets/train_index.csv")
@@ -81,6 +82,7 @@ def main(config):
         train_df = train_info.loc[train_index]
         val_df = train_info.loc[val_index]
 
+        """
         # 변환 설정 (albumentations 사용)
         transform_selector = TransformSelector(transform_type="albumentations")
         train_transform = transform_selector.get_transform(is_train=True)

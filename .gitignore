@@ -23,3 +23,4 @@ config_vgg.json
 run_scripts
 result
 config_dj*.json
+config.json
