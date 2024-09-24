@@ -36,7 +36,7 @@ def main(exp, config):
         train_info = pd.read_csv(config['data_info_file'])
         
         # # 데이터셋을 train과 valid로 나눔 
-        train_df, val_df = train_test_split(train_info, test_size=0.2, stratify=train_info['target'])
+        train_df, val_df = train_test_split(train_info, test_size=exp['valid_split_ratio'], stratify=train_info['target'])
 
         # 변환 설정 (albumentations 사용)
         transform_selector = TransformSelector(transform_type="albumentations")
@@ -91,6 +91,7 @@ def main(exp, config):
                 log_writer.writeheader()
 
             log_writer.writerow(log)
+            f.flush()
 
             # 모델 저장
             trainer.save_model(epoch, val_loss, exp['num_model_save'])
