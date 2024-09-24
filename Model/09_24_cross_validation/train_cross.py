@@ -106,7 +106,7 @@ def main(config):
                 })
 
                 # 모델 저장
-                trainer.save_model(epoch, val_loss, fold+1)
+                trainer.save_model(epoch, val_loss, fold)
 
             # W&B 모델 가중치 업로드
             #wandb.save(os.path.join(config['result_path'], f"model_epoch_{epoch}.pt"))
