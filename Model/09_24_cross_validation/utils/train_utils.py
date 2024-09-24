@@ -3,7 +3,7 @@ import os
 from tqdm import tqdm
 
 class Trainer:
-    def __init__(self, model, device, train_loader, val_loader, optimizer, scheduler, loss_fn, epochs, result_path):
+    def __init__(self, model, device, train_loader, val_loader, optimizer, scheduler, loss_fn, epochs, result_path, fold):
         self.model = model
         self.device = device
         self.train_loader = train_loader
@@ -16,12 +16,13 @@ class Trainer:
         self.best_models = []  # 저장된 모델 목록 (손실 값, 에폭, 경로)
         self.lowest_loss = float('inf')  # 가장 낮은 검증 손실을 기록하기 위한 초기값 설정
         
-    def save_model(self, epoch, loss):
+    def save_model(self, epoch, loss, fold):
         # 결과 저장 경로 생성
-        os.makedirs(self.result_path, exist_ok=True)
+        dir_path = os.path.join(self.result_path, f'fold_{fold}')
+        os.makedirs(dir_path, exist_ok=True)
 
         # 현재 에폭의 모델 저장
-        current_model_path = os.path.join(self.result_path, f'model_epoch_{epoch}_loss_{loss:.4f}.pt')
+        current_model_path = os.path.join(dir_path, f'model_epoch_{epoch}_loss_{loss:.4f}.pt')
         torch.save(self.model.state_dict(), current_model_path)
 
         # 저장된 모델을 리스트에 추가 (손실 값, 에폭 번호, 모델 경로)
@@ -29,7 +30,7 @@ class Trainer:
         self.best_models.sort(key=lambda x: x[0])  # 손실 값 기준으로 정렬 (낮은 순으로)
 
         # 모델이 3개를 넘으면 가장 높은 손실을 가진 모델 삭제
-        if len(self.best_models) > 3:
+        if len(self.best_models) > 1:
             _, _, path_to_remove = self.best_models.pop(-1)
             if os.path.exists(path_to_remove):
                 os.remove(path_to_remove)
@@ -91,7 +92,6 @@ class Trainer:
         accuracy = correct / total
         
         print(f"Training Epoch Average Loss: {avg_loss:.4f}, Accuracy: {accuracy:.4f}")
-        
         return avg_loss, accuracy
 
     # 검증 함수 (validate)
