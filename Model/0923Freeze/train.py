@@ -110,9 +110,10 @@ def main(config):
             print(f"Epoch {epoch+1}/{config['epochs']}")
             #train_loss, train_acc = trainer.train_epoch()
             
-            # epoch < 5일 때 freeze 적용
-            #if epoch < 5:
-            trainer.freeze_model_layers(model)
+            # epoch < 6일 때 freeze 적용
+            if epoch < 6:
+                trainer.freeze_model_layers(model)
+            #trainer.classifier_unfreeze_layer(model)
             
             ### cutmix, mixup 추가
             train_loss, train_acc = trainer.train_epoch(use_cutmix=config['cutmix'], use_mixup=config['mixup'], alpha=0.25)
@@ -133,8 +134,6 @@ def main(config):
 
             # W&B 모델 가중치 업로드
             #wandb.save(os.path.join(config['result_path'], f"model_epoch_{epoch}.pt"))
-
-            #scheduler.step()
 
         # 학습 완료 후 Slack DM 전송
         slack_token = config['slack_token']

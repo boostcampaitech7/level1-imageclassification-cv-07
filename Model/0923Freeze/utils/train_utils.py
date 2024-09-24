@@ -122,13 +122,6 @@ class Trainer:
                 param.requires_grad = True  # classifier만 학습
             else:
                 param.requires_grad = False
-                # freeze된 파라미터 확인
-        for name, param in model.named_parameters():
-            if not param.requires_grad:
-                print(f"Frozen layer: {name}")
-            else:
-                print(f"Unfrozen layer: {name}")
-        print("here")
 
             
     # 훈련 함수 (train_epoch)
