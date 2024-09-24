@@ -15,6 +15,7 @@ import wandb  # W&B 추가
 from sklearn.model_selection import train_test_split
 import os
 import traceback  # 오류 스택 트레이스를 캡처하기 위한 모듈
+import timm
 
 # Slack 알림 함수 (DM용)
 def send_slack_dm(token: str, user_id: str, message: str):
@@ -95,8 +96,20 @@ def main(config):
         val_loader = DataLoader(val_dataset, batch_size=config['batch_size'], shuffle=False)
 
         # 모델 설정
-        model_selector = ModelSelector(model_type="timm", num_classes=len(train_info['target'].unique()), model_name=config['model_name'], pretrained=True)
-        model = model_selector.get_model()
+        #model_selector = ModelSelector(model_type="timm", num_classes=len(train_info['target'].unique()), model_name=config['model_name'], pretrained=True)
+        #model = model_selector.get_model()
+        model = timm.create_model("wide_resnet50_2", num_classes=500, pretrained=True)
+        model_path = '/data/ephemeral/home/Jihwan/level1-imageclassification-cv-07/Data/09_24_Resizing/results/best_model_1.3669.pt'
+
+        # Load the state dictionary from the file
+        state_dict = torch.load(model_path)
+
+        # Remove the 'model.' prefix from the keys
+        new_state_dict = {k[6:]: v for k, v in state_dict.items() if k.startswith('model.')}
+
+        # Load the modified state dictionary into the model
+        model.load_state_dict(new_state_dict)
+        
         model.to(device)
 
         # 옵티마이저 및 스케줄러
