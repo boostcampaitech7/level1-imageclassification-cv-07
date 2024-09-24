@@ -60,7 +60,7 @@ def main(config):
         train_info = pd.read_csv(config['data_info_file'])
         
         # # 데이터셋을 train과 valid로 나눔 
-        train_df, val_df = train_test_split(train_info, test_size=0.2, stratify=train_info['target'])
+        train_df, val_df = train_test_split(train_info, test_size=0.1, stratify=train_info['target'])
 
         """
         # train_index.csv와 val_index.csv 경로
@@ -102,7 +102,7 @@ def main(config):
         # 옵티마이저 및 스케줄러
         optimizer = optim.SGD(model.parameters(), lr=config['learning_rate'])
         scheduler = StepLR(optimizer, step_size=2 * len(train_loader), gamma=0.5)
-        loss_fn = nn.CrossEntropyLoss(label_smoothing=0.08)
+        loss_fn = nn.CrossEntropyLoss(label_smoothing=0.05)
 
         # Trainer 설정
         trainer = Trainer(model, device, train_loader, val_loader, optimizer, scheduler, loss_fn, config['epochs'], config['result_path'])

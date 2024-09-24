@@ -4,7 +4,7 @@ import pandas as pd
 import torch
 from torch.utils.data import Dataset
 from typing import Callable, Union, Tuple
-import numpy as np 
+import numpy as np
 
 class CustomDataset(Dataset):
     def __init__(self, root_dir: str, info_df: pd.DataFrame, transform: Callable, is_inference: bool = False):
