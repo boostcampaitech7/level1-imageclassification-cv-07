@@ -2,7 +2,7 @@
     "output_fold_path_format": "result/{model_name}_{optimizer}_{learning_rate}",
     "model_name": "tf_efficientnetv2_m",
     "optimizer": "Adam",
-    "epochs": 15,
+    "epochs": 10,
     "batch_size": 32,
     "valid_split_ratio": 0.2,
     "learning_rate": 0.001,
@@ -12,5 +12,9 @@
     "stepLR_gamma": 0.5,
     "num_model_save": 1,
     "version": "v1",
-    "person_name": "dj"
+    "person_name": "dj",
+    "result_path": "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0923_model/result/tf_efficientnetv2_m_Adam_0.001",
+    "result_fold": "tf_efficientnetv2_m_Adam_0.001",
+    "output_path": "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0923_model/result/tf_efficientnetv2_m_Adam_0.001/tf_efficientnetv2_m_Adam_0.001_predict.csv",
+    "log_path": "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0923_model/result/tf_efficientnetv2_m_Adam_0.001/tf_efficientnetv2_m_Adam_0.001_log.csv"
 }

@@ -2,7 +2,7 @@
     "output_fold_path_format": "result/{model_name}_{optimizer}_{learning_rate}",
     "model_name": "tf_efficientnetv2_xl",
     "optimizer": "Adam",
-    "epochs": 15,
+    "epochs": 10,
     "batch_size": 32,
     "valid_split_ratio": 0.2,
     "learning_rate": 0.001,

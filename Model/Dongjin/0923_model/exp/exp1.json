@@ -13,8 +13,8 @@
     "num_model_save": 1,
     "version": "v1",
     "person_name": "dj",
-    "result_path": "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0923_model/result/tf_efficientnet_b6_Adam_0.001_0",
-    "result_fold": "tf_efficientnet_b6_Adam_0.001_0",
-    "output_path": "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0923_model/result/tf_efficientnet_b6_Adam_0.001_0/tf_efficientnet_b6_Adam_0.001_0_predict.csv",
-    "log_path": "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0923_model/result/tf_efficientnet_b6_Adam_0.001_0/tf_efficientnet_b6_Adam_0.001_0_log.csv"
+    "result_path": "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0923_model/result/tf_efficientnet_b6_Adam_0.001",
+    "result_fold": "tf_efficientnet_b6_Adam_0.001",
+    "output_path": "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0923_model/result/tf_efficientnet_b6_Adam_0.001/tf_efficientnet_b6_Adam_0.001_predict.csv",
+    "log_path": "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0923_model/result/tf_efficientnet_b6_Adam_0.001/tf_efficientnet_b6_Adam_0.001_log.csv"
 }
