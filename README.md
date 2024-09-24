@@ -23,11 +23,12 @@
 Notion 🔥
 랩업 리포트 ✅
 랩업 리포트 PPT⭐
+main table or graph
 
 
 ## 🐋Model
 모델 설명
-
+모델 그림
 
 ## ⭐File Tree
 ```
