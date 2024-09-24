@@ -35,8 +35,14 @@ def main(exp, config):
         # 데이터 로드
         train_info = pd.read_csv(config['data_info_file'])
         
-        # # 데이터셋을 train과 valid로 나눔 
-        train_df, val_df = train_test_split(train_info, test_size=exp['valid_split_ratio'], stratify=train_info['target'])
+        if (exp['random_select_dataset']):
+            # 데이터셋을 train과 valid로 나눔 
+            train_df, val_df = train_test_split(train_info, test_size=exp['valid_split_ratio'], stratify=train_info['target'])
+        else:
+            train_index = pd.read_csv(exp['train_index_path'], header = None).squeeze()
+            val_index = pd.read_csv(exp['valid_index_path'], header = None).squeeze()
+            train_df = train_info.loc[train_index]
+            val_df = train_info.loc[val_index]
 
         # 변환 설정 (albumentations 사용)
         transform_selector = TransformSelector(transform_type="albumentations")
