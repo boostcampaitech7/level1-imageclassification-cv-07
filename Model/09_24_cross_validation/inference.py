@@ -81,10 +81,7 @@ def main(config):
         model.load_state_dict(torch.load(model_path, map_location=device))
         model.to(device)
         models.append(model)
-    
-    # 저장된 모델 로드
-    model.load_state_dict(torch.load(model_path, map_location=device))
-    model.to(device)
+
 
     # 추론 실행
     predictions = ensemble_predict(model, device, test_loader)

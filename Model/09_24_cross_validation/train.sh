@@ -3,8 +3,8 @@
 # W&B 로그인을 먼저 수행해야 함 (첫 실행 시)
 wandb login f959455a587ffb09e8677e2432dea61cd38cca5c
 # config.json을 이용해 학습을 실행
-python /data/ephemeral/home/Jihwan/level1-imageclassification-cv-07/Model/09_24_cross_validation/train.py --config /data/ephemeral/home/Jihwan/level1-imageclassification-cv-07/Model/09_24_cross_validation/config.json
-python /data/ephemeral/home/Jihwan/level1-imageclassification-cv-07/Model/09_24_cross_validation/utils --config /data/ephemeral/home/Jihwan/level1-imageclassification-cv-07/Model/09_24_cross_validation/config.json
+python /data/ephemeral/home/Jihwan/level1-imageclassification-cv-07/Model/09_24_cross_validation/train_cross.py --config /data/ephemeral/home/Jihwan/level1-imageclassification-cv-07/Model/09_24_cross_validation/config.json
+python /data/ephemeral/home/Jihwan/level1-imageclassification-cv-07/Model/09_24_cross_validation/inference.py --config /data/ephemeral/home/Jihwan/level1-imageclassification-cv-07/Model/09_24_cross_validation/config.json
 
 # chmod +x /data/ephemeral/home/Jihwan/level1-imageclassification-cv-07/Model/09_24_cross_validation/train.sh
 # /data/ephemeral/home/Jihwan/level1-imageclassification-cv-07/Model/09_24_cross_validation/train.sh
