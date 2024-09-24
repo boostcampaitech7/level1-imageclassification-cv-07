@@ -119,12 +119,8 @@ def main(config):
                     "val_accuracy": val_acc,
                     "learning_rate": optimizer.param_groups[0]['lr']
                 })
-
-                # 모델 저장
-                trainer.save_model(fold, epoch, val_loss)
-
-                # W&B 모델 가중치 업로드
-                #wandb.save(os.path.join(config['result_path'], f"model_epoch_{epoch}.pt"))
+            # 모델 저장
+            trainer.save_model(fold, epoch, val_loss)
 
 
         # 학습 완료 후 Slack DM 전송

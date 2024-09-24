@@ -20,7 +20,7 @@ class Trainer:
         # 결과 저장 경로 생성
         os.makedirs(self.result_path, exist_ok=True)
 
-        # 현재 에폭의 모델 저장
+        # 현재 fold의 모델 저장
         current_model_path = os.path.join(self.result_path, f'model_fold_{fold}_loss_{loss:.4f}.pt')
         torch.save(self.model.state_dict(), current_model_path)
 

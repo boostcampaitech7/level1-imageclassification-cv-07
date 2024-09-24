@@ -2,6 +2,7 @@ import os
 import json
 import torch
 import pandas as pd
+import numpy as np
 from datasets.custom_dataset import CustomDataset
 from datasets.transform import TransformSelector
 from models.model_selector import ModelSelector
@@ -10,20 +11,30 @@ from tqdm import tqdm
 import argparse
 
 # 추론(inference) 함수 + 앙상블 예측
-def ensemble_predict(models, device, test_loader):
+def ensemble_predict(models, device, dataloader):
     predictions = np.zeros((len(dataloader.dataset), 500)) # 예측값을 저장할 배열을 초기화
-
+    
+    count = 0
     for model in models:
+        count += 1
+        print(f"\nmodel{count}")
         model.eval()
         with torch.no_grad():
             fold_predictions = [] # 각 모델의 예측값을 저장할 리스트를 초기화
-            for X, _ in dataloader:
-                X = X.to(device)
-                pred = model(X)
-                fold_predictions.append(pred.cpu().numpy())
-            fold_predictions = np.concatenate(fold_predictions, axis=0) # 예측값을 합산하여 앙상블
+            for images in tqdm(dataloader, desc="Inference"):
+                images = images.to(device)
+                outputs = model(images)
+                pred = torch.softmax(outputs, dim=1)  # 소프트맥스 함수 적용
+                fold_predictions.extend(pred.cpu().numpy())
+            fold_predictions = np.array(fold_predictions)
+            print(f"fold_predictions shape: {fold_predictions.shape}")
+            print(f"fold_predictions: {fold_predictions}")
             predictions += fold_predictions
-    return predictions # 최종 예측값 반환
+    predictions /= len(models)  # 모델의 개수로 나눠서 평균화
+    final_predictions = np.argmax(predictions, axis=1)  # 가장 높은 확률을 가진 클래스를 선택
+    print(f"final_predictions shape: {final_predictions.shape}")
+    print(f"final_predictions: {final_predictions}")
+    return final_predictions # 최종 예측값 반환
 
 # 'best_model' 파일을 찾는 함수 (가장 최근에 저장된 파일 선택)
 def get_model_paths(directory):
@@ -70,14 +81,14 @@ def main(config):
         models.append(model)
 
     # 추론 실행
-    test_predictions = ensemble_predict(models, test_dataloader, device)
+    test_predictions = ensemble_predict(models, device, test_loader)
 
     # 결과 저장 디렉터리 확인 및 생성
     output_dir = os.path.dirname(config['output_path'])
     ensure_dir_exists(output_dir)
 
     # 예측 결과 저장
-    test_info['target'] = predictions
+    test_info['target'] = test_predictions
     test_info = test_info.reset_index().rename(columns={"index": "ID"})
     test_info.to_csv(config['output_path'], index=False)
     print(f"Predictions saved to {config['output_path']}")
