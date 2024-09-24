@@ -84,7 +84,7 @@ def main(config):
             # 옵티마이저 및 스케줄러
             optimizer = optim.SGD(model.parameters(), lr=config['learning_rate'])
             scheduler = StepLR(optimizer, step_size=2 * len(train_loader), gamma=0.5)
-            loss_fn = nn.CrossEntropyLoss(label_smoothing=0.08)
+            loss_fn = nn.CrossEntropyLoss(label_smoothing=0.1)
 
             # Trainer 설정
             trainer = Trainer(model, device, train_loader, val_loader, optimizer, scheduler, loss_fn, config['epochs'], config['result_path'], fold)
