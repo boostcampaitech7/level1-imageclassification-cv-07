@@ -57,29 +57,10 @@ def main(config):
     # 베스트 모델 경로 설정
     model_path = get_best_model_path(config['result_path'])
     print(f"Loading best model from {model_path}")
-    
-    '''
+
     # 저장된 모델 로드
     model.load_state_dict(torch.load(model_path, map_location=device))
     model.to(device)
-    
-    # Check if the state_dict is wrapped in a dictionary
-    if isinstance(state_dict, dict) and 'model' in state_dict:
-        state_dict = state_dict['model']
-
-    # Remove any potential prefix from the keys
-    new_state_dict = {}
-    for k, v in state_dict.items():
-        if k.startswith('model.'):
-            new_state_dict[k[6:]] = v
-        else:
-            new_state_dict[k] = v
-
-    # Load the modified state dictionary into the model
-    model.load_state_dict(new_state_dict, strict=False) # Use strict=False to ignore missing keys
-    model.to(device)
-    '''
-    
 
     # 추론 실행
     predictions = inference(model, device, test_loader)
