@@ -71,7 +71,7 @@ def main(config):
         for data in train_info['target']:
             labels.append(data)
             
-        for fold, (train_idx, val_idx) in enumerate(skf.split(train_info, labels)):
+        for fold, (train_idx, val_idx) in enumerate(skf.split(np.zeros(len(labels)), labels)):
             print(f'Fold {fold+1}')
 
             # train_idx와 val_idx에 따른 학습 및 검증 데이터 분리
