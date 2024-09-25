@@ -75,6 +75,7 @@ def main(config):
             print(f'Fold {fold+1}')
 
             # train_idx와 val_idx에 따른 학습 및 검증 데이터 분리
+            print(f'train_idx : {train_idx}, val_idx : {val_idx}')
             train_subset = train_info.iloc[train_idx].reset_index(drop=True)
             val_subset = train_info.iloc[val_idx].reset_index(drop=True)
             
@@ -97,7 +98,7 @@ def main(config):
             model.to(device)
 
             # 옵티마이저 + scheduler
-            optimizer = optim.Adam(model.parameters(), lr=config['learning_rate'])
+            optimizer = optim.SGD(model.parameters(), lr=config['learning_rate'])
             scheduler = StepLR(optimizer, step_size=2 * len(train_dataloader), gamma=0.5)
             loss_fn = nn.CrossEntropyLoss(label_smoothing=0.08)
 
@@ -119,8 +120,10 @@ def main(config):
                     "val_accuracy": val_acc,
                     "learning_rate": optimizer.param_groups[0]['lr']
                 })
-            # 모델 저장
-            trainer.save_model(fold, epoch, val_loss)
+                
+                # 모델 저장
+                trainer.save_model(fold, epoch, val_loss)
+                
 
 
         # 학습 완료 후 Slack DM 전송

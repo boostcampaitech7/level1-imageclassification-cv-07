@@ -23,14 +23,13 @@ def ensemble_predict(models, device, dataloader):
             fold_predictions = [] # 각 모델의 예측값을 저장할 리스트를 초기화
             for images in tqdm(dataloader, desc="Inference"):
                 images = images.to(device)
-                outputs = model(images)
-                pred = torch.softmax(outputs, dim=1)  # 소프트맥스 함수 적용
+                pred = model(images)
+                print(f"pred: {pred}")
                 fold_predictions.extend(pred.cpu().numpy())
             fold_predictions = np.array(fold_predictions)
             print(f"fold_predictions shape: {fold_predictions.shape}")
             print(f"fold_predictions: {fold_predictions}")
             predictions += fold_predictions
-    predictions /= len(models)  # 모델의 개수로 나눠서 평균화
     final_predictions = np.argmax(predictions, axis=1)  # 가장 높은 확률을 가진 클래스를 선택
     print(f"final_predictions shape: {final_predictions.shape}")
     print(f"final_predictions: {final_predictions}")
@@ -38,7 +37,7 @@ def ensemble_predict(models, device, dataloader):
 
 # 'best_model' 파일을 찾는 함수 (가장 최근에 저장된 파일 선택)
 def get_model_paths(directory):
-    files = [f for f in os.listdir(directory) if f.startswith('model_epoch') and f.endswith('.pt')]
+    files = [f for f in os.listdir(directory) if f.startswith('model_fold') and f.endswith('.pt')]
     if not files:
         raise FileNotFoundError(f"No best model files found in directory: {directory}")
     
@@ -63,7 +62,7 @@ def main(config):
 
     # 테스트 데이터셋 및 데이터로더 생성
     test_dataset = CustomDataset(root_dir=config['test_data_dir'], info_df=test_info, transform=test_transform, is_inference=True)
-    test_loader = DataLoader(test_dataset, batch_size=config['batch_size'], shuffle=False)
+    test_loader = DataLoader(test_dataset, batch_size=16, shuffle=False)
 
     # 모델 설정
     model_selector = ModelSelector(model_type="timm", num_classes=config['num_classes'], model_name=config['model_name'], pretrained=False)

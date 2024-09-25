@@ -13,37 +13,39 @@ class Trainer:
         self.loss_fn = loss_fn
         self.epochs = epochs
         self.result_path = result_path
-        self.best_models = []  # 저장된 모델 목록 (손실 값, 에폭, 경로)
+        self.fold_models = []  # 저장된 모델 목록 (손실 값, 에폭, 경로)
+        # self.best_models = []  # best 모델 목록 (손실 값, 에폭, 경로)
         self.lowest_loss = float('inf')  # 가장 낮은 검증 손실을 기록하기 위한 초기값 설정
         
     def save_model(self, fold, epoch, loss):
+  
         # 결과 저장 경로 생성
         os.makedirs(self.result_path, exist_ok=True)
 
         # 현재 fold의 모델 저장
-        current_model_path = os.path.join(self.result_path, f'model_fold_{fold}_loss_{loss:.4f}.pt')
+        current_model_path = os.path.join(self.result_path, f'model_fold_{fold}_epoch_{epoch}_loss_{loss:.4f}.pt')
         torch.save(self.model.state_dict(), current_model_path)
 
         # 저장된 모델을 리스트에 추가 (손실 값, 에폭 번호, 모델 경로)
-        self.best_models.append((loss, epoch, current_model_path))
-        self.best_models.sort(key=lambda x: x[0])  # 손실 값 기준으로 정렬 (낮은 순으로)
+        self.fold_models.append((loss, epoch, current_model_path))
+        self.fold_models.sort(key=lambda x: x[0])  # 손실 값 기준으로 정렬 (낮은 순으로)
         
-        # 전체 모델 리스트에 추가
-        # self.models.append((loss, epoch, current_model_path))
-
-        # 모델이 3개를 넘으면 가장 높은 손실을 가진 모델 삭제
-        # if len(self.best_models) > 3:
-        #     _, _, path_to_remove = self.best_models.pop(-1)
-        #     if os.path.exists(path_to_remove):
-        #         os.remove(path_to_remove)
-        #         print(f"Model at {path_to_remove} removed due to exceeding the model limit.")
+        # fold만큼 돌았을 때 best_model 제외 나머지 모델 경로들을 삭제
+        if len(self.fold_models) == self.epochs:
+            for _, _, path_to_remove in self.fold_models[1:]:
+                if os.path.exists(path_to_remove):
+                    os.remove(path_to_remove)
+                    print(f"All Model at {path_to_remove} removed except best_model")
+    
 
         # 가장 낮은 손실 모델을 별도로 저장 (기존 best_model이 있으면 삭제)
-        # best_model_path = os.path.join(self.result_path, f'best_model_{loss:.4f}.pt')
+        # best_model_path = os.path.join(self.result_path, f'model_fold_{fold}_best_{loss:.4f}.pt')
 
-        # if loss < self.lowest_loss:
+        # print(loss < self.lowest_loss)
+        # print(str(fold) == best_model_path[11:12])
+        # if (loss < self.lowest_loss) and (str(fold) == best_model_path[11:12]):
         #     # 기존 best_model 파일 삭제
-        #     previous_best_model_path = os.path.join(self.result_path, f'best_model_{self.lowest_loss:.4f}.pt')
+        #     previous_best_model_path = os.path.join(self.result_path, f'model_fold_{fold}_best_{self.lowest_loss:.4f}.pt')
         #     if os.path.exists(previous_best_model_path):
         #         os.remove(previous_best_model_path)
         #         print(f"Previous best model {previous_best_model_path} removed.")
@@ -51,7 +53,8 @@ class Trainer:
         #     # 새로운 best_model 저장
         #     self.lowest_loss = loss
         #     torch.save(self.model.state_dict(), best_model_path)
-        #     print(f"New best model saved at {best_model_path} with loss = {loss:.4f}")
+        #     print(f"New best model saved at {best_model_path} with loss = {loss:.4f}") # 전체 모델 리스트에 추가
+       
 
             
     # 훈련 함수 (train_epoch)
