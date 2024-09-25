@@ -156,7 +156,7 @@ def main(config):
                 train_loader = DataLoader(train_dataset, batch_size=config['batch_size'], shuffle=True)
                 val_loader = DataLoader(val_dataset, batch_size=config['batch_size'], shuffle=False)
                 
-                optimizer = optim.SGD(model.parameters(), lr=0.01)
+                optimizer = optim.SGD(model.parameters(), lr=0.009)
                 scheduler = StepLR(optimizer, step_size=2 * len(train_loader), gamma=0.9)
                 loss_fn = nn.CrossEntropyLoss(label_smoothing=0.05)
                 trainer = Trainer(model, device, train_loader, val_loader, optimizer, scheduler, loss_fn, config['epochs'], config['result_path'])
