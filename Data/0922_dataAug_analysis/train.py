@@ -60,6 +60,7 @@ def main(config):
         train_info = pd.read_csv(config['data_info_file'])
         
         # # 데이터셋을 train과 valid로 나눔 
+<<<<<<< HEAD:baseline_model/train.py
         train_df, val_df = train_test_split(train_info, test_size=0.1, stratify=train_info['target'])   #9:1
 
         # train_index.csv와 val_index.csv 경로
@@ -69,17 +70,36 @@ def main(config):
 
         #train_index_path = os.path.join(py_dir_path, rel_train_index_path)
         #val_index_path = os.path.join(py_dir_path, rel_val_index_path)
+=======
+        train_df, val_df = train_test_split(train_info, test_size=0.1, stratify=train_info['target'])
 
-        # # # train_index.csv와 val_index.csv 저장
-        # # train_df.index.to_series().to_csv(train_index_path, index = False, header = False)
-        # # val_df.index.to_series().to_csv(val_index_path, index = False, header = False)
+        # train_index.csv와 val_index.csv 경로
+        py_dir_path = os.path.dirname(os.path.abspath(__file__))
+        rel_train_index_path = os.path.normpath("datasets/train_index.csv")
+        rel_val_index_path = os.path.normpath("datasets/val_index.csv")
+
+        train_index_path = os.path.join(py_dir_path, rel_train_index_path)
+        val_index_path = os.path.join(py_dir_path, rel_val_index_path)
+>>>>>>> 36c41bc3cbddc0afad5d0ec6fa596c62a165a365:Data/0922_dataAug_analysis/train.py
+
+        # # train_index.csv와 val_index.csv 저장
+        # train_df.index.to_series().to_csv(train_index_path, index = False, header = False)
+        # val_df.index.to_series().to_csv(val_index_path, index = False, header = False)
 
         # train_index.csv와 val_index.csv를 이용하여 train_df와 val_df를 로드       
+<<<<<<< HEAD:baseline_model/train.py
         #train_index = pd.read_csv(train_index_path, header = None).squeeze()
         #val_index = pd.read_csv(val_index_path, header = None).squeeze()
 
         #train_df = train_info.loc[train_index]
         #val_df = train_info.loc[val_index]
+=======
+        train_index = pd.read_csv(train_index_path, header = None).squeeze()
+        val_index = pd.read_csv(val_index_path, header = None).squeeze()
+
+        train_df = train_info.loc[train_index]
+        val_df = train_info.loc[val_index]
+>>>>>>> 36c41bc3cbddc0afad5d0ec6fa596c62a165a365:Data/0922_dataAug_analysis/train.py
 
         # 변환 설정 (albumentations 사용)
         transform_selector = TransformSelector(transform_type="albumentations")
@@ -98,7 +118,7 @@ def main(config):
         model.to(device)
 
         # 옵티마이저 및 스케줄러
-        optimizer = optim.SGD(model.parameters(), lr=config['learning_rate'])
+        optimizer = optim.SGD(model.parameters(), lr=config['learning_rate'], momentum=0.9) # momentum 적용
         scheduler = StepLR(optimizer, step_size=2 * len(train_loader), gamma=0.5)
         loss_fn = nn.CrossEntropyLoss(label_smoothing=0.08)
 
@@ -108,10 +128,7 @@ def main(config):
         # 학습 과정에서 W&B 로깅 추가
         for epoch in range(config['epochs']):
             print(f"Epoch {epoch+1}/{config['epochs']}")
-            #train_loss, train_acc = trainer.train_epoch()
-            
-            ### cutmix, mixup 추가
-            train_loss, train_acc = trainer.train_epoch(use_cutmix=config['cutmix'], use_mixup=config['mixup'], alpha=0.25)
+            train_loss, train_acc = trainer.train_epoch()
             val_loss, val_acc = trainer.validate()
 
             # W&B에 로그 기록

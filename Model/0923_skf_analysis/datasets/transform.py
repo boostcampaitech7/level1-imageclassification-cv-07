@@ -25,6 +25,7 @@ class AlbumentationsTransform:
             self.transform = A.Compose(
                 [
                     A.HorizontalFlip(p=0.5),
+<<<<<<< HEAD:baseline_model/datasets/transform.py
                     #A.Rotate(limit=15), #기하학적 변환(회전)
                     A.ShiftScaleRotate(shift_limit=0.05, scale_limit=0.05, rotate_limit=15, p=0.5),
                     A.RandomBrightnessContrast(p=0.2),
@@ -36,6 +37,9 @@ class AlbumentationsTransform:
                         A.GaussianBlur(blur_limit=(3, 7), p=0.5),
                     ], p=0.3),
                     #A.CoarseDropout(max_holes=8, max_height=32, max_width=32, min_holes=1, min_height=16, min_width=16, p=1.0), # coarseDropout 추가 
+=======
+                    A.Rotate(limit=15),
+>>>>>>> 36c41bc3cbddc0afad5d0ec6fa596c62a165a365:Model/0923_skf_analysis/datasets/transform.py
                 ] + common_transforms
             )
         else:
@@ -82,5 +86,3 @@ class TransformSelector:
             return AlbumentationsTransform(is_train=is_train)
         elif self.transform_type == "torchvision":
             return TorchvisionTransform(is_train=is_train)
-
-
