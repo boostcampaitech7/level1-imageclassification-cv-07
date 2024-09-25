@@ -14,7 +14,5 @@
   "slack_user_id": "your id",
   "wandb_project": "sketch_classification",
   "version": "v1",
-  "person_name": "dj",
-  "cutmix" : "False",
-  "mixup" : "False"
+  "person_name": "dj"
 }
