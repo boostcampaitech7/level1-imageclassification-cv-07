@@ -16,7 +16,7 @@ class Trainer:
         self.best_models = []  # 저장된 모델 목록 (손실 값, 에폭, 경로)
         self.lowest_loss = float('inf')  # 가장 낮은 검증 손실을 기록하기 위한 초기값 설정
         
-    def save_model(self, epoch, loss): 
+    def save_model(self, epoch, loss):
         # 결과 저장 경로 생성
         os.makedirs(self.result_path, exist_ok=True)
 
@@ -93,7 +93,6 @@ class Trainer:
         
         return avg_loss, accuracy
 
-    # 검증 함수 (validate)
     # 검증 함수 (validate)
     def validate(self):
         self.model.eval()

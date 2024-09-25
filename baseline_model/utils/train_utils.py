@@ -16,7 +16,7 @@ class Trainer:
         self.best_models = []  # 저장된 모델 목록 (손실 값, 에폭, 경로)
         self.lowest_loss = float('inf')  # 가장 낮은 검증 손실을 기록하기 위한 초기값 설정
         
-    def save_model(self, epoch, loss): 
+    def save_model(self, epoch, loss):
         # 결과 저장 경로 생성
         os.makedirs(self.result_path, exist_ok=True)
 
@@ -50,9 +50,60 @@ class Trainer:
             torch.save(self.model.state_dict(), best_model_path)
             print(f"New best model saved at {best_model_path} with loss = {loss:.4f}")
 
+    # MixUp 구현
+    def mixup_data(x, y, alpha=1.0):
+        '''입력과 라벨을 섞고 lambda 값을 반환'''
+        if alpha > 0:
+            lam = np.random.beta(alpha, alpha)
+        else:
+            lam = 1
+
+        batch_size = x.size()[0]
+        index = torch.randperm(batch_size).to(x.device)
+
+        mixed_x = lam * x + (1 - lam) * x[index, :]
+        y_a, y_b = y, y[index]
+        return mixed_x, y_a, y_b, lam
+    
+    # 랜덤 영역을 잘라내기 위한 함수
+    def rand_bbox(self, size, lam):
+        W = size[2]
+        H = size[3]
+        cut_rat = np.sqrt(1. - lam)
+        cut_w = int(W * cut_rat)
+        cut_h = int(H * cut_rat)
+
+        cx = np.random.randint(W)
+        cy = np.random.randint(H)
+
+        bbx1 = np.clip(cx - cut_w // 2, 0, W)
+        bby1 = np.clip(cy - cut_h // 2, 0, H)
+        bbx2 = np.clip(cx + cut_w // 2, 0, W)
+        bby2 = np.clip(cy + cut_h // 2, 0, H)
+
+        return bbx1, bby1, bbx2, bby2
+    
+    # CutMix 구현
+    def cutmix_data(self, x, y, alpha=1.0):
+        '''입력과 라벨을 섞고 lambda 값을 반환'''
+        if alpha > 0:
+            lam = np.random.beta(alpha, alpha)
+        else:
+            lam = 1
+        batch_size = x.size()[0]
+        index = torch.randperm(batch_size).to(x.device)
+
+        bbx1, bby1, bbx2, bby2 = self.rand_bbox(x.size(), lam)
+        x[:, :, bbx1:bbx2, bby1:bby2] = x[index, :, bbx1:bbx2, bby1:bby2]
+
+        y_a, y_b = y, y[index]
+        return x, y_a, y_b, lam
+
+
+
             
     # 훈련 함수 (train_epoch)
-    def train_epoch(self):
+    def train_epoch(self, use_cutmix=False, use_mixup=False, alpha=1.0):
         self.model.train()
         total_loss = 0.0
         correct = 0
@@ -64,6 +115,12 @@ class Trainer:
         for batch_idx, (images, targets) in enumerate(progress_bar):
             images, targets = images.to(self.device), targets.to(self.device)
             
+            # CutMix 또는 MixUp 적용
+            if use_cutmix:
+                images, targets_a, targets_b, lam = self.cutmix_data(images, targets, alpha)
+            elif use_mixup:
+                images, targets_a, targets_b, lam = self.mixup_data(images, targets, alpha)
+
             # 옵티마이저 초기화
             self.optimizer.zero_grad()
             
@@ -71,12 +128,15 @@ class Trainer:
             outputs = self.model(images)
             
             # 손실 계산
-            loss = self.loss_fn(outputs, targets)
+            if use_cutmix or use_mixup:
+                loss = lam * self.loss_fn(outputs, targets_a) + (1 - lam) * self.loss_fn(outputs, targets_b)
+            else:
+                loss = self.loss_fn(outputs, targets)
+            
             
             # 역전파 및 옵티마이저 스텝
             loss.backward()
             self.optimizer.step()
-            self.scheduler.step()
             
             # 배치 손실 및 정확도 계산
             total_loss += loss.item()
@@ -94,7 +154,6 @@ class Trainer:
         
         return avg_loss, accuracy
 
-    # 검증 함수 (validate)
     # 검증 함수 (validate)
     def validate(self):
         self.model.eval()
@@ -131,10 +190,10 @@ class Trainer:
         
         return avg_loss, accuracy
 
-    #def train(self):
-    #    for epoch in range(self.epochs):
-    #        train_loss, train_acc = self.train_epoch()
-    #        val_loss, val_acc = self.validate()
-    #        self.scheduler.step()
-    #        print(f"Epoch {epoch+1}/{self.epochs}, Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.4f}, "
-    #              f"Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.4f}")
+    def train(self):
+        for epoch in range(self.epochs):
+            train_loss, train_acc = self.train_epoch()
+            val_loss, val_acc = self.validate()
+            self.scheduler.step()
+            print(f"Epoch {epoch+1}/{self.epochs}, Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.4f}, "
+                  f"Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.4f}")
