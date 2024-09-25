@@ -9,6 +9,8 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 import argparse
 
+
+
 def inference(model, device, test_loader):
     model.eval()
     predictions = []
@@ -19,3 +21,5 @@ def inference(model, device, test_loader):
             preds = torch.argmax(outputs, dim=1)
             predictions.extend(preds.cpu().numpy())
     return predictions
+
+
