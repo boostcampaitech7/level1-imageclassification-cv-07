@@ -61,7 +61,8 @@ def main(config):
         train_info = pd.read_csv(config['data_info_file'])
         
         # # 데이터셋을 train과 valid로 나눔 
-        train_df, val_df = train_test_split(train_info, test_size=0.1, stratify=train_info['target'])
+        
+        train_df, val_df = train_test_split(train_info, test_size=0.1, stratify=train_info['target'], random_state=0)
 
         """
         # train_index.csv와 val_index.csv 경로
@@ -85,7 +86,7 @@ def main(config):
 
         """
         # 변환 설정 (albumentations 사용)
-        transform_selector = TransformSelector(transform_type="albumentations")
+        transform_selector = TransformSelector(transform_type="albumentations1")
         train_transform = transform_selector.get_transform(is_train=True)
         val_transform = transform_selector.get_transform(is_train=False)
 
@@ -99,22 +100,21 @@ def main(config):
         #model_selector = ModelSelector(model_type="timm", num_classes=len(train_info['target'].unique()), model_name=config['model_name'], pretrained=True)
         #model = model_selector.get_model()
         model = timm.create_model("wide_resnet50_2", num_classes=500, pretrained=True)
-        model_path = '/data/ephemeral/home/Jihwan/level1-imageclassification-cv-07/Data/09_24_Resizing/results/best_model_1.3669.pt'
+        model_path = '/data/ephemeral/home/Jihwan/level1-imageclassification-cv-07/Data/09_24_Resizing/results/best_model_0.9822.pt'
 
         # Load the state dictionary from the file
         state_dict = torch.load(model_path)
 
         # Remove the 'model.' prefix from the keys
-        new_state_dict = {k[6:]: v for k, v in state_dict.items() if k.startswith('model.')}
 
         # Load the modified state dictionary into the model
-        model.load_state_dict(new_state_dict)
+        model.load_state_dict(state_dict)
         
         model.to(device)
 
         # 옵티마이저 및 스케줄러
         optimizer = optim.SGD(model.parameters(), lr=config['learning_rate'])
-        scheduler = StepLR(optimizer, step_size=2 * len(train_loader), gamma=0.5)
+        scheduler = StepLR(optimizer, step_size=2 * len(train_loader), gamma=0.7)
         loss_fn = nn.CrossEntropyLoss(label_smoothing=0.05)
 
         # Trainer 설정
@@ -141,6 +141,23 @@ def main(config):
 
             # W&B 모델 가중치 업로드
             #wandb.save(os.path.join(config['result_path'], f"model_epoch_{epoch}.pt"))
+            
+            if epoch == 3:
+                print(f"Epoch {epoch+1}/{config['epochs']}")
+                
+                # 변환 설정 (albumentations 사용)
+                transform_selector = TransformSelector(transform_type="albumentations2")
+                train_transform = transform_selector.get_transform(is_train=True)
+                val_transform = transform_selector.get_transform(is_train=False)
+
+                # 데이터셋 및 데이터로더 생성 (train, valid)
+                train_dataset = CustomDataset(root_dir=config['train_data_dir'], info_df=train_df, transform=train_transform)
+                val_dataset = CustomDataset(root_dir=config['train_data_dir'], info_df=val_df, transform=val_transform)
+                train_loader = DataLoader(train_dataset, batch_size=config['batch_size'], shuffle=True)
+                val_loader = DataLoader(val_dataset, batch_size=config['batch_size'], shuffle=False)
+                
+                optimizer = optim.SGD(model.parameters(), lr=config['learning_rate'])
+                trainer = Trainer(model, device, train_loader, val_loader, optimizer, scheduler, loss_fn, config['epochs'], config['result_path'])
 
         # 학습 완료 후 Slack DM 전송
         slack_token = config['slack_token']
