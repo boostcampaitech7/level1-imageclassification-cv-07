@@ -86,7 +86,7 @@ def main(config):
 
         """
         # 변환 설정 (albumentations 사용)
-        transform_selector = TransformSelector(transform_type="torchvision")
+        transform_selector = TransformSelector(transform_type="albumentations1")
         train_transform = transform_selector.get_transform(is_train=True)
         val_transform = transform_selector.get_transform(is_train=False)
 
@@ -115,7 +115,7 @@ def main(config):
 
         # 옵티마이저 및 스케줄러
         optimizer = optim.SGD(model.parameters(), lr=0.01)
-        scheduler = StepLR(optimizer, step_size=2 * len(train_loader), gamma = 0.9)
+        scheduler = StepLR(optimizer, step_size=2 * len(train_loader), gamma=1)
         loss_fn = nn.CrossEntropyLoss(label_smoothing=0.05)
 
         # Trainer 설정
@@ -142,7 +142,7 @@ def main(config):
 
             # W&B 모델 가중치 업로드
             #wandb.save(os.path.join(config['result_path'], f"model_epoch_{epoch}.pt"))
-            '''
+            
             if epoch == 9:
                 
                 # 변환 설정 (albumentations 사용)
@@ -160,7 +160,25 @@ def main(config):
                 scheduler = StepLR(optimizer, step_size=2 * len(train_loader), gamma=0.9)
                 loss_fn = nn.CrossEntropyLoss(label_smoothing=0.05)
                 trainer = Trainer(model, device, train_loader, val_loader, optimizer, scheduler, loss_fn, config['epochs'], config['result_path'])
-            '''
+                
+            if epoch == 19:
+                
+                # 변환 설정 (albumentations 사용)
+                transform_selector = TransformSelector(transform_type="albumentations3")
+                train_transform = transform_selector.get_transform(is_train=True)
+                val_transform = transform_selector.get_transform(is_train=False)
+
+                # 데이터셋 및 데이터로더 생성 (train, valid)
+                train_dataset = CustomDataset(root_dir=config['train_data_dir'], info_df=train_df, transform=train_transform)
+                val_dataset = CustomDataset(root_dir=config['train_data_dir'], info_df=val_df, transform=val_transform)
+                train_loader = DataLoader(train_dataset, batch_size=config['batch_size'], shuffle=True)
+                val_loader = DataLoader(val_dataset, batch_size=config['batch_size'], shuffle=False)
+                
+                optimizer = optim.SGD(model.parameters(), lr=0.009)
+                scheduler = StepLR(optimizer, step_size=2 * len(train_loader), gamma=0.9)
+                loss_fn = nn.CrossEntropyLoss(label_smoothing=0.05)
+                trainer = Trainer(model, device, train_loader, val_loader, optimizer, scheduler, loss_fn, config['epochs'], config['result_path'])
+
 
         # 학습 완료 후 Slack DM 전송
         slack_token = config['slack_token']

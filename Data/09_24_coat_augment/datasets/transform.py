@@ -3,6 +3,7 @@ from albumentations.pytorch import ToTensorV2
 import numpy as np
 import torch
 from torchvision import transforms
+from PIL import Image
 
 class AlbumentationsTransform1:
     def __init__(self, is_train: bool = True):
@@ -17,6 +18,14 @@ class AlbumentationsTransform1:
                     A.HorizontalFlip(p=0.5),
                     A.Rotate(limit=15),
                     A.RandomBrightnessContrast(p=0.2),
+                    A.RandomRotate90(),                # Randomly rotate by 90 degrees
+                    A.Rotate(limit=15),                # Custom rotation
+                    A.Affine(rotate=15,                # Custom affine transformation
+                            translate_percent={"x": 0.1, "y": 0.1}),
+                    A.HorizontalFlip(p=0.5),          # Custom horizontal flip
+                    A.VerticalFlip(p=0.5),            # Custom vertical flip
+                    A.RandomErasing(p=0.5,             # Random erase
+                                    scale=(0.02, 0.2)),
                     #A.CoarseDropout(max_holes=8, max_height=32, max_width=32, min_holes=1, min_height=16, min_width=16, p=1.0), # coarseDropout 추가 
                 ] + common_transforms
             )
@@ -59,14 +68,22 @@ class AlbumentationsTransform2:
 class TorchvisionTransform:
     def __init__(self, is_train: bool = True):
         if is_train:
+            # Define a list of transformations, starting with AutoAugment
             self.transform = transforms.Compose([
-                transforms.Resize((512, 512)),
-                transforms.RandomHorizontalFlip(),
-                transforms.RandomRotation(15),
+                transforms.Resize((224, 224)),
                 transforms.ToTensor(),
+
+                transforms.RandomRotation(15),         # Custom rotation
+                transforms.RandomAffine(degrees=15,    # Custom affine transformation
+                                        translate=(0.1, 0.1)),
+                transforms.RandomHorizontalFlip(),     # Custom horizontal flip
+                transforms.RandomVerticalFlip(),       # Custom vertical flip
+                transforms.RandomErasing(scale=(0.02, 0.2)),  # Random erase
+
                 transforms.Normalize(mean=[0.865, 0.865, 0.865], std=[0.26, 0.26, 0.26])
             ])
         else:
+            # Simpler transform for test set
             self.transform = transforms.Compose([
                 transforms.Resize((224, 224)),
                 transforms.ToTensor(),
@@ -74,7 +91,8 @@ class TorchvisionTransform:
             ])
 
     def __call__(self, image):
-        return self.transform(image)
+        pil_image = Image.fromarray(image)
+        return self.transform(pil_image)
 
 class TransformSelector:
     def __init__(self, transform_type: str):
