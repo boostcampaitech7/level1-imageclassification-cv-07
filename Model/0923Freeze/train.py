@@ -113,6 +113,10 @@ def main(config):
             # epoch < 6일 때 freeze 적용
             if epoch < 6:
                 trainer.freeze_model_layers(model)
+            else:
+                for name, param in model.named_parameters():
+                    param.requires_grad = True
+
             #trainer.classifier_unfreeze_layer(model)
             
             ### cutmix, mixup 추가
