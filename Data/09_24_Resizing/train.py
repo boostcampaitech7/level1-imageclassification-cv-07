@@ -143,8 +143,7 @@ def main(config):
             # W&B 모델 가중치 업로드
             #wandb.save(os.path.join(config['result_path'], f"model_epoch_{epoch}.pt"))
             
-            if epoch == 3:
-                print(f"Epoch {epoch+1}/{config['epochs']}")
+            if epoch == 10:
                 
                 # 변환 설정 (albumentations 사용)
                 transform_selector = TransformSelector(transform_type="albumentations2")
