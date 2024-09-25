@@ -80,7 +80,7 @@ class TransformSelector:
     def __init__(self, transform_type: str):
         if transform_type == "albumentations1":
             self.transform_type = "albumentations1"
-        if transform_type == "albumentations2":
+        elif transform_type == "albumentations2":
             self.transform_type = "albumentations2"
         elif transform_type == "torchvision":
             self.transform_type = "torchvision"
