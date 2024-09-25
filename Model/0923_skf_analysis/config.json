@@ -1,0 +1,18 @@
+{
+  "train_data_dir": "/data/ephemeral/home/data/train",
+  "test_data_dir": "/data/ephemeral/home/data/test",
+  "data_info_file": "/data/ephemeral/home/data/train.csv",
+  "result_path": "/data/ephemeral/home/Jungyeon/level1-imageclassification-cv-07/Model/0923_skf_analysis/results/k-fold_v4",
+  "model_name": "coatnet_3_rw_224",
+  "output_path": "/data/ephemeral/home/Jungyeon/level1-imageclassification-cv-07/Model/0923_skf_analysis/output/k-fold_v4/predictions2.csv",
+  "epochs": 10,
+  "batch_size": 32,
+  "learning_rate": 0.005,
+  "num_classes": 500,
+  "test_info_file": "/data/ephemeral/home/data/test.csv",
+  "slack_token": "xoxb-3675348806454-7770502297873-mdTjIGdMaAxwZ59W17EU3ckd",
+  "slack_user_id": "U07EFLVB398",
+  "wandb_project": "sketch_classification",
+  "version": "k-fold_v4",
+  "person_name": "jy"
+}
