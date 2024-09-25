@@ -43,7 +43,7 @@ def main(config):
     test_info = pd.read_csv(config['test_info_file'])
 
     # 변환 설정 (val_transform 사용)
-    transform_selector = TransformSelector(transform_type="albumentations")
+    transform_selector = TransformSelector(transform_type="albumentations2")
     test_transform = transform_selector.get_transform(is_train=False)
 
     # 테스트 데이터셋 및 데이터로더 생성

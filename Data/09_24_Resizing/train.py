@@ -93,8 +93,8 @@ def main(config):
         # 데이터셋 및 데이터로더 생성 (train, valid)
         train_dataset = CustomDataset(root_dir=config['train_data_dir'], info_df=train_df, transform=train_transform)
         val_dataset = CustomDataset(root_dir=config['train_data_dir'], info_df=val_df, transform=val_transform)
-        train_loader = DataLoader(train_dataset, batch_size=config['batch_size'], shuffle=True)
-        val_loader = DataLoader(val_dataset, batch_size=config['batch_size'], shuffle=False)
+        train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
+        val_loader = DataLoader(val_dataset, batch_size=64, shuffle=False)
 
         # 모델 설정
         model_selector = ModelSelector(model_type="timm", num_classes=len(train_info['target'].unique()), model_name=config['model_name'], pretrained=True)
@@ -114,8 +114,8 @@ def main(config):
         model.to(device)
 
         # 옵티마이저 및 스케줄러
-        optimizer = optim.SGD(model.parameters(), lr=config['learning_rate'])
-        scheduler = StepLR(optimizer, step_size=2 * len(train_loader), gamma=0.7)
+        optimizer = optim.SGD(model.parameters(), lr=0.01)
+        scheduler = StepLR(optimizer, step_size=2 * len(train_loader), gamma=1)
         loss_fn = nn.CrossEntropyLoss(label_smoothing=0.05)
 
         # Trainer 설정
@@ -143,7 +143,7 @@ def main(config):
             # W&B 모델 가중치 업로드
             #wandb.save(os.path.join(config['result_path'], f"model_epoch_{epoch}.pt"))
             
-            if epoch == 10:
+            if epoch == 9:
                 
                 # 변환 설정 (albumentations 사용)
                 transform_selector = TransformSelector(transform_type="albumentations2")
@@ -156,7 +156,9 @@ def main(config):
                 train_loader = DataLoader(train_dataset, batch_size=config['batch_size'], shuffle=True)
                 val_loader = DataLoader(val_dataset, batch_size=config['batch_size'], shuffle=False)
                 
-                optimizer = optim.SGD(model.parameters(), lr=config['learning_rate'])
+                optimizer = optim.SGD(model.parameters(), lr=0.01)
+                scheduler = StepLR(optimizer, step_size=2 * len(train_loader), gamma=0.9)
+                loss_fn = nn.CrossEntropyLoss(label_smoothing=0.05)
                 trainer = Trainer(model, device, train_loader, val_loader, optimizer, scheduler, loss_fn, config['epochs'], config['result_path'])
 
         # 학습 완료 후 Slack DM 전송

@@ -28,8 +28,8 @@ class Trainer:
         self.best_models.append((loss, epoch, current_model_path))
         self.best_models.sort(key=lambda x: x[0])  # 손실 값 기준으로 정렬 (낮은 순으로)
 
-        # 모델이 2개를 넘으면 가장 높은 손실을 가진 모델 삭제
-        if len(self.best_models) > 2:
+        # 모델이 3개를 넘으면 가장 높은 손실을 가진 모델 삭제
+        if len(self.best_models) > 3:
             _, _, path_to_remove = self.best_models.pop(-1)
             if os.path.exists(path_to_remove):
                 os.remove(path_to_remove)
