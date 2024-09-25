@@ -15,8 +15,9 @@ class Trainer:
         self.result_path = result_path
         self.best_models = []  # 저장된 모델 목록 (손실 값, 에폭, 경로)
         self.lowest_loss = float('inf')  # 가장 낮은 검증 손실을 기록하기 위한 초기값 설정
+
         
-    def save_model(self, epoch, loss): 
+    def save_model(self, epoch, loss):
         # 결과 저장 경로 생성
         os.makedirs(self.result_path, exist_ok=True)
 
@@ -50,9 +51,28 @@ class Trainer:
             torch.save(self.model.state_dict(), best_model_path)
             print(f"New best model saved at {best_model_path} with loss = {loss:.4f}")
 
+
+    def unfreeze_stage(self, stage_name):
+        for name, param in self.model.model.named_parameters():
+            if stage_name in name:
+                param.requires_grad = True
             
     # 훈련 함수 (train_epoch)
-    def train_epoch(self):
+    def train_epoch(self, current_epoch):
+
+        # Unfreezing 로직
+        if current_epoch == 3:
+            print("Unfreezing Stage 3 and 2")
+            self.unfreeze_stage("stages.3")
+            self.unfreeze_stage("stages.2")
+        elif current_epoch == 5:
+            print("Unfreezing Stage 1")
+            self.unfreeze_stage("stages.1")
+        elif current_epoch == 7:
+            print("Unfreezing Stage 0 and stem")
+            self.unfreeze_stage("stages.0")
+            self.unfreeze_stage("stem")
+
         self.model.train()
         total_loss = 0.0
         correct = 0
@@ -76,6 +96,7 @@ class Trainer:
             # 역전파 및 옵티마이저 스텝
             loss.backward()
             self.optimizer.step()
+            self.scheduler.step()
             
             # 배치 손실 및 정확도 계산
             total_loss += loss.item()
@@ -93,7 +114,6 @@ class Trainer:
         
         return avg_loss, accuracy
 
-    # 검증 함수 (validate)
     # 검증 함수 (validate)
     def validate(self):
         self.model.eval()
