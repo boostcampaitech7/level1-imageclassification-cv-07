@@ -97,18 +97,19 @@ def main(config):
         val_loader = DataLoader(val_dataset, batch_size=config['batch_size'], shuffle=False)
 
         # 모델 설정
-        #model_selector = ModelSelector(model_type="timm", num_classes=len(train_info['target'].unique()), model_name=config['model_name'], pretrained=True)
-        #model = model_selector.get_model()
-        model = timm.create_model("wide_resnet50_2", num_classes=500, pretrained=True)
-        model_path = '/data/ephemeral/home/Jihwan/level1-imageclassification-cv-07/Data/09_24_Resizing/results/best_model_0.9822.pt'
+        model_selector = ModelSelector(model_type="timm", num_classes=len(train_info['target'].unique()), model_name=config['model_name'], pretrained=True)
+        model = model_selector.get_model()
+        
+        #model = timm.create_model("wide_resnet50_2", num_classes=500, pretrained=True)
+        #model_path = '/data/ephemeral/home/Jihwan/level1-imageclassification-cv-07/Data/09_24_Resizing/results/best_model_0.9822.pt'
 
         # Load the state dictionary from the file
-        state_dict = torch.load(model_path)
+        #state_dict = torch.load(model_path)
 
         # Remove the 'model.' prefix from the keys
 
         # Load the modified state dictionary into the model
-        model.load_state_dict(state_dict)
+        #model.load_state_dict(state_dict)
         
         model.to(device)
 
