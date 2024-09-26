@@ -8,7 +8,7 @@
 
 ## [1] Project Overview
 ### ⏲️ Timeline (09/03 - 09/26)
-<img src='https://github.com/user-attachments/assets/5bf0cf9c-1210-4234-a26c-8e29abe83441' width="70%"/>
+<img src='https://github.com/user-attachments/assets/5bf0cf9c-1210-4234-a26c-8e29abe83441' width="80%"/>
 
 1. EDA 및 baseline code 분석
 2. Baseline model 선정
@@ -17,7 +17,7 @@
 
 
 ### 🥇 최종 결과
-<img width="70%" alt="Screenshot 2024-09-26 at 7 05 51 PM" src="https://github.com/user-attachments/assets/a98cf160-e42a-4861-8455-10fce5ccba0a"><br>
+<img width="80%" alt="Screenshot 2024-09-26 at 7 05 51 PM" src="https://github.com/user-attachments/assets/a98cf160-e42a-4861-8455-10fce5ccba0a"><br>
 - 랩업 리포트 링크
 
 ## [2] Environment
