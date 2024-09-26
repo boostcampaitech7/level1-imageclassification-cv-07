@@ -1,13 +1,13 @@
 {
-    "batch_size": 16,
+    "batch_size": 32,
     "num_classes": 500,
     "result_paths": [
-        "/home/jin/Project/Sketch classification/0924_model_ensemble/result/coatnet_3_rw_224_kfold0", 
-        "/home/jin/Project/Sketch classification/0924_model_ensemble/result/coatnet_3_rw_224_kfold1",
-        "/home/jin/Project/Sketch classification/0924_model_ensemble/result/coatnet_3_rw_224_kfold2",
-        "/home/jin/Project/Sketch classification/0924_model_ensemble/result/coatnet_3_rw_224_kfold3",
-        "/home/jin/Project/Sketch classification/0924_model_ensemble/result/coatnet_3_rw_224_kfold4"
+        "/home/jin/Project/Sketch classification/0924_model_ensemble/result/efficientnet_b4_kfold0", 
+        "/home/jin/Project/Sketch classification/0924_model_ensemble/result/efficientnet_b4_kfold1",
+        "/home/jin/Project/Sketch classification/0924_model_ensemble/result/efficientnet_b4_kfold2",
+        "/home/jin/Project/Sketch classification/0924_model_ensemble/result/efficientnet_b4_kfold3",
+        "/home/jin/Project/Sketch classification/0924_model_ensemble/result/efficientnet_b4_kfold4"
     ],
-    "output_dir": "coatnet_3_rw_224_5fold"
+    "output_dir": "efficientnet_b4_5fold"
 }
 
