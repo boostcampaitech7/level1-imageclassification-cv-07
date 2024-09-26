@@ -8,6 +8,8 @@
 
 ## [1] Project Overview
 ### ⏲️ Timeline (09/03 - 09/26)
+<img src='https://github.com/user-attachments/assets/5bf0cf9c-1210-4234-a26c-8e29abe83441' width="70%"/>
+
 1. EDA 및 baseline code 분석
 2. Baseline model 선정
 3. 모듈화 및 협업 툴 추가
@@ -58,7 +60,6 @@
      -  정면, 측면 혹은 뒤집어진 이미지도 존재
    -  기본 baseline_code 모델의 정확도는 약 68.4%로 확인
 2. Baseline model 선정
-   <br><br><img src="https://github.com/user-attachments/assets/e484fec4-ef59-4b43-9fda-7ae2ecdf7d72" width="25%"/><br>
    - 다양한 backbone 모델 실험 후 최종적으로 가장 높은 88.3%의 public score를 달성한 **Coatnet_3_rw_224**를 baseline model로 선정
 3. 모듈화 및 협업 툴 추가
    - Weights and Biases (WandB) 사용
