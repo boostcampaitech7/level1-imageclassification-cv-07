@@ -86,22 +86,22 @@ def main(config):
 
         """
         # 변환 설정 (albumentations 사용)
-        transform_selector = TransformSelector(transform_type="albumentations2")
+        transform_selector = TransformSelector(transform_type="albumentations3")
         train_transform = transform_selector.get_transform(is_train=True)
         val_transform = transform_selector.get_transform(is_train=False)
 
         # 데이터셋 및 데이터로더 생성 (train, valid)
         train_dataset = CustomDataset(root_dir=config['train_data_dir'], info_df=train_df, transform=train_transform)
         val_dataset = CustomDataset(root_dir=config['train_data_dir'], info_df=val_df, transform=val_transform)
-        train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
-        val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False)
+        train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True)
+        val_loader = DataLoader(val_dataset, batch_size=16, shuffle=False)
 
         # 모델 설정
         #model_selector = ModelSelector(model_type="timm", num_classes=len(train_info['target'].unique()), model_name=config['model_name'], pretrained=True)
         #model = model_selector.get_model()
         
         model = timm.create_model("wide_resnet50_2", num_classes=500, pretrained=True)
-        model_path = '/data/ephemeral/home/Jihwan/level1-imageclassification-cv-07/Data/09_24_Resizing/results/best_model_1.1276.pt'
+        model_path = '/data/ephemeral/home/Jihwan/level1-imageclassification-cv-07/Data/09_24_Resizing_resnet/results/best_model_1.9271.pt'
 
         # Load the state dictionary from the file
         state_dict = torch.load(model_path)
@@ -115,7 +115,7 @@ def main(config):
         model.to(device)
 
         # 옵티마이저 및 스케줄러
-        optimizer = optim.SGD(model.parameters(), lr=0.006)
+        optimizer = optim.SGD(model.parameters(), lr=0.009)
         scheduler = StepLR(optimizer, step_size=2 * len(train_loader), gamma=0.9)
         loss_fn = nn.CrossEntropyLoss(label_smoothing=0.05)
 

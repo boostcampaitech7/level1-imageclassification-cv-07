@@ -80,7 +80,7 @@ def main(config):
 
         """
         # 변환 설정 (albumentations 사용)
-        transform_selector = TransformSelector(transform_type="albumentations2")
+        transform_selector = TransformSelector(transform_type="albumentations3")
         train_transform = transform_selector.get_transform(is_train=True)
         val_transform = transform_selector.get_transform(is_train=False)
 
@@ -95,22 +95,21 @@ def main(config):
         model = model_selector.get_model()
         
         model = timm.create_model("wide_resnet50_2", num_classes=500, pretrained=True)
-        model_path = '/data/ephemeral/home/Jihwan/level1-imageclassification-cv-07/Data/09_24_Resizing_resnet/results/best_model_4.1051.pt'
+        model_path = '/data/ephemeral/home/Jihwan/level1-imageclassification-cv-07/Data/09_24_Resizing_resnet/results/best_model_1.7192.pt'
 
         # Load the state dictionary from the file
         state_dict = torch.load(model_path)
-        new_state_dict = {k[6:]: v for k, v in state_dict.items() if k.startswith('model.')}
 
         # Remove the 'model.' prefix from the keys
 
         # Load the modified state dictionary into the model
-        model.load_state_dict(new_state_dict)
+        model.load_state_dict(state_dict)
         
         model.to(device)
 
         # 옵티마이저 및 스케줄러
         optimizer = optim.SGD(model.parameters(), lr=0.01)
-        scheduler = StepLR(optimizer, step_size=2 * len(train_loader), gamma=0.95)
+        scheduler = StepLR(optimizer, step_size=3 * len(train_loader), gamma=0.95)
         loss_fn = nn.CrossEntropyLoss(label_smoothing=0.1)
 
         # Trainer 설정
