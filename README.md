@@ -15,8 +15,9 @@
 3. Baseline model 일반화 성능 개선
 4. 최종 결과 분석
 
+
 ### 🥇 최종 결과
-- 최종 리더보드 순위 캡쳐
+<img width="70%" alt="Screenshot 2024-09-26 at 7 05 51 PM" src="https://github.com/user-attachments/assets/a98cf160-e42a-4861-8455-10fce5ccba0a"><br>
 - 랩업 리포트 링크
 
 ## [2] Environment
