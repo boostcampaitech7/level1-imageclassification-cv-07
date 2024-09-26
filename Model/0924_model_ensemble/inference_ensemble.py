@@ -36,6 +36,7 @@ def get_best_model_path(directory):
     best_file = max(files, key=lambda f: os.path.getmtime(os.path.join(directory, f)))
     return os.path.join(directory, best_file)
 
+
 def get_exp_json(directory):
     foldname = os.path.split(directory)[1]
     path = os.path.join(directory, f"{foldname}.json")
