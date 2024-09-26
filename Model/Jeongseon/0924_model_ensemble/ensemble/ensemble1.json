@@ -1,0 +1,9 @@
+{
+    "batch_size": 16,
+    "num_classes": 500,
+    "result_paths": [
+        "/home/jin/Project/Sketch classification/0924_model_ensemble/result/coatnet_3_rw_224_kfold0"
+    ],
+    "output_path": "/home/jin/Project/Sketch classification/0924_model_ensemble/ensemble_result/coatnet_3_rw_224_1fold.csv"
+}
+
