@@ -60,6 +60,17 @@ def main(config):
         train_info = pd.read_csv(config['data_info_file'])
         
         # # 데이터셋을 train과 valid로 나눔 
+<<<<<<< HEAD:baseline_model/train.py
+        train_df, val_df = train_test_split(train_info, test_size=0.1, stratify=train_info['target'])   #9:1
+
+        # train_index.csv와 val_index.csv 경로
+        #py_dir_path = os.path.dirname(os.path.abspath(__file__))
+        #rel_train_index_path = os.path.normpath("datasets/train_index.csv")
+        #rel_val_index_path = os.path.normpath("datasets/val_index.csv")
+
+        #train_index_path = os.path.join(py_dir_path, rel_train_index_path)
+        #val_index_path = os.path.join(py_dir_path, rel_val_index_path)
+=======
         train_df, val_df = train_test_split(train_info, test_size=0.1, stratify=train_info['target'])
 
         # train_index.csv와 val_index.csv 경로
@@ -69,17 +80,26 @@ def main(config):
 
         train_index_path = os.path.join(py_dir_path, rel_train_index_path)
         val_index_path = os.path.join(py_dir_path, rel_val_index_path)
+>>>>>>> 36c41bc3cbddc0afad5d0ec6fa596c62a165a365:Data/0922_dataAug_analysis/train.py
 
         # # train_index.csv와 val_index.csv 저장
         # train_df.index.to_series().to_csv(train_index_path, index = False, header = False)
         # val_df.index.to_series().to_csv(val_index_path, index = False, header = False)
 
         # train_index.csv와 val_index.csv를 이용하여 train_df와 val_df를 로드       
+<<<<<<< HEAD:baseline_model/train.py
+        #train_index = pd.read_csv(train_index_path, header = None).squeeze()
+        #val_index = pd.read_csv(val_index_path, header = None).squeeze()
+
+        #train_df = train_info.loc[train_index]
+        #val_df = train_info.loc[val_index]
+=======
         train_index = pd.read_csv(train_index_path, header = None).squeeze()
         val_index = pd.read_csv(val_index_path, header = None).squeeze()
 
         train_df = train_info.loc[train_index]
         val_df = train_info.loc[val_index]
+>>>>>>> 36c41bc3cbddc0afad5d0ec6fa596c62a165a365:Data/0922_dataAug_analysis/train.py
 
         # 변환 설정 (albumentations 사용)
         transform_selector = TransformSelector(transform_type="albumentations")

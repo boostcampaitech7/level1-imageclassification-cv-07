@@ -7,15 +7,22 @@ output/
 .vscode
 **/.env
 .vscode
-config_sj.json
+config_sj*.json
 train_sj.sh
 config_dj.json
+config.json
 train_dj.sh
 baseline/
 data/
 train_result/
-Lv1/
+LV1/
 sojeong_code/
+jeongseon_code/
+.env
+train.sh
+baseline_model/
+
+
 *.png
 *.jpeg
 
