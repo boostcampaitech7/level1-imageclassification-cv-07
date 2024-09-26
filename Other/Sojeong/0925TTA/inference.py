@@ -51,19 +51,10 @@ def inference(model, device, test_loader):
         for images in tqdm(test_loader, desc="Inference"):
             images = images.to(device)
             outputs = model(images)
-            preds = torch.argmax(outputs, dim=1)
+            probabilities = softmax(outputs, dim=1)
+            preds = torch.argmax(probabilities, dim=1)
             predictions.extend(preds.cpu().numpy())
     return predictions
-
-# 'best_model' 파일을 찾는 함수 (가장 최근에 저장된 파일 선택)
-def get_best_model_path(directory):
-    files = '/data/ephemeral/home/Sojeong/level1-imageclassification-cv-07/Other/0925TTA/best_model_1.0949.pt'
-    if not files:
-        raise FileNotFoundError(f"No best model files found in directory: {directory}")
-    
-    # 파일의 수정 시간을 기준으로 가장 최근에 저장된 파일 선택
-    best_file = max(files, key=lambda f: os.path.getmtime(os.path.join(directory, f)))
-    return os.path.join(directory, best_file)
 
 # 디렉터리가 없으면 생성하는 함수
 def ensure_dir_exists(directory):
@@ -92,7 +83,7 @@ def main(config):
     model = model_selector.get_model()
 
     # 베스트 모델 경로 설정
-    model_path = '/data/ephemeral/home/Sojeong/level1-imageclassification-cv-07/Other/0925TTA/best_model_1.0949.pt'
+    model_path = '/data/ephemeral/home/Sojeong/level1-imageclassification-cv-07/Other/Sojeong/0925TTA/best_model_1.0949.pt'
     print(f"Loading best model from {model_path}")
 
     # 저장된 모델 로드
