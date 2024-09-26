@@ -23,9 +23,9 @@ def ensemble_predict(models, device, dataloader):
             fold_predictions = [] # 각 모델의 예측값을 저장할 리스트를 초기화
             for images in tqdm(dataloader, desc="Inference"):
                 images = images.to(device)
-                pred = model(images)
-                print(f"pred: {pred}")
-                fold_predictions.extend(pred.cpu().numpy())
+                outputs = model(images)
+                preds = torch.softmax(outputs, dim=1)
+                fold_predictions.extend(preds.cpu().numpy())
             fold_predictions = np.array(fold_predictions)
             print(f"fold_predictions shape: {fold_predictions.shape}")
             print(f"fold_predictions: {fold_predictions}")
@@ -62,7 +62,7 @@ def main(config):
 
     # 테스트 데이터셋 및 데이터로더 생성
     test_dataset = CustomDataset(root_dir=config['test_data_dir'], info_df=test_info, transform=test_transform, is_inference=True)
-    test_loader = DataLoader(test_dataset, batch_size=16, shuffle=False)
+    test_loader = DataLoader(test_dataset, batch_size=8, shuffle=False)
 
     # 모델 설정
     model_selector = ModelSelector(model_type="timm", num_classes=config['num_classes'], model_name=config['model_name'], pretrained=False)
