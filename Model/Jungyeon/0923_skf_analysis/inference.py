@@ -23,8 +23,9 @@ def ensemble_predict(models, device, dataloader):
             fold_predictions = [] # 각 모델의 예측값을 저장할 리스트를 초기화
             for images in tqdm(dataloader, desc="Inference"):
                 images = images.to(device)
-                pred = model(images)
-                fold_predictions.extend(pred.cpu().numpy())
+                outputs = model(images)
+                preds = torch.softmax(outputs, dim=1)
+                fold_predictions.extend(preds.cpu().numpy())
             fold_predictions = np.array(fold_predictions)
             print(f"fold_predictions shape: {fold_predictions.shape}")
             print(f"fold_predictions: {fold_predictions}")
