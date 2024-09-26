@@ -24,7 +24,6 @@ def ensemble_predict(models, device, dataloader):
             for images in tqdm(dataloader, desc="Inference"):
                 images = images.to(device)
                 pred = model(images)
-                print(f"pred: {pred}")
                 fold_predictions.extend(pred.cpu().numpy())
             fold_predictions = np.array(fold_predictions)
             print(f"fold_predictions shape: {fold_predictions.shape}")

@@ -9,6 +9,7 @@ from torch.utils.data import DataLoader
 import torch.optim as optim
 from torch.optim.lr_scheduler import StepLR
 import torch.nn as nn
+import numpy as np
 import pandas as pd
 import requests
 import wandb  # W&B 추가
@@ -17,6 +18,7 @@ import os
 import traceback  # 오류 스택 트레이스를 캡처하기 위한 모듈
 from sklearn.model_selection import StratifiedKFold
 from torch.utils.data import Subset
+from torchvision.transforms import v2
 
 
 
@@ -91,6 +93,13 @@ def main(config):
             # DataLoader 생성
             train_dataloader = DataLoader(train_dataset, batch_size=config['batch_size'], shuffle=True)
             val_dataloader = DataLoader(val_dataset, batch_size=config['batch_size'], shuffle=False)
+            
+            cutmix = v2.CutMix(num_classes=500)
+            mixup = v2.MixUp(num_classes=500)
+            cutmix_or_mixup = v2.RandomChoice([cutmix, mixup])
+            
+            for images, labels in train_dataloader:
+                images, labels = cutmix_or_mixup(images, labels)
 
             # 모델 생성 및 학습
             model_selector = ModelSelector(model_type="timm", num_classes=len(train_info['target'].unique()), model_name=config['model_name'], pretrained=True)
@@ -100,7 +109,7 @@ def main(config):
             # 옵티마이저 + scheduler
             optimizer = optim.SGD(model.parameters(), lr=config['learning_rate'])
             scheduler = StepLR(optimizer, step_size=2 * len(train_dataloader), gamma=0.5)
-            loss_fn = nn.CrossEntropyLoss(label_smoothing=0.08)
+            loss_fn = nn.CrossEntropyLoss(label_smoothing=0.1)
 
             # Trainer 설정
             trainer = Trainer(model, device, train_dataloader, val_dataloader, optimizer, scheduler, loss_fn, config['epochs'], config['result_path'])
