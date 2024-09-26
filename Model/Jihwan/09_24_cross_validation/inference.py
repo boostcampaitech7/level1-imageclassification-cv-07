@@ -84,7 +84,7 @@ def main(config):
 
 
     # 추론 실행
-    predictions = ensemble_predict(model, device, test_loader)
+    predictions = ensemble_predict(models, device, test_loader)
 
     # 결과 저장 디렉터리 확인 및 생성
     output_dir = os.path.dirname(config['output_path'])

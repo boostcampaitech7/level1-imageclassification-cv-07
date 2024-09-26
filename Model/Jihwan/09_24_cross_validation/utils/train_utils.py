@@ -29,7 +29,7 @@ class Trainer:
         self.best_models.append((loss, epoch, current_model_path))
         self.best_models.sort(key=lambda x: x[0])  # 손실 값 기준으로 정렬 (낮은 순으로)
 
-        # 모델이 3개를 넘으면 가장 높은 손실을 가진 모델 삭제
+        # 모델이 1개를 넘으면 가장 높은 손실을 가진 모델 삭제
         if len(self.best_models) > 1:
             _, _, path_to_remove = self.best_models.pop(-1)
             if os.path.exists(path_to_remove):
@@ -37,11 +37,11 @@ class Trainer:
                 print(f"Model at {path_to_remove} removed due to exceeding the model limit.")
 
         # 가장 낮은 손실 모델을 별도로 저장 (기존 best_model이 있으면 삭제)
-        best_model_path = os.path.join(self.result_path, f'best_model_{loss:.4f}.pt')
+        best_model_path = os.path.join(current_model_path, f'best_model_{loss:.4f}.pt')
 
         if loss < self.lowest_loss:
             # 기존 best_model 파일 삭제
-            previous_best_model_path = os.path.join(self.result_path, f'best_model_{self.lowest_loss:.4f}.pt')
+            previous_best_model_path = os.path.join(self.result_path, f'best_[model_{self.lowest_loss:.4f}.pt')
             if os.path.exists(previous_best_model_path):
                 os.remove(previous_best_model_path)
                 print(f"Previous best model {previous_best_model_path} removed.")

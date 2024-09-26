@@ -27,6 +27,7 @@ class CustomDataset(Dataset):
         image = np.repeat(image[:, :, np.newaxis], 3, axis=2)  # (H, W) -> (H, W, 3)
         image = self.transform(image)
 
+
         if self.is_inference:
             return image
         else:
