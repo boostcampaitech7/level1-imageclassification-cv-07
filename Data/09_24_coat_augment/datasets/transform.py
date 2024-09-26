@@ -71,15 +71,13 @@ class TorchvisionTransform:
             # Define a list of transformations, starting with AutoAugment
             self.transform = transforms.Compose([
                 transforms.Resize((224, 224)),
+                transforms.RandAugment(num_ops=2, magnitude=9),
                 transforms.ToTensor(),
+                
 
                 transforms.RandomRotation(15),         # Custom rotation
-                transforms.RandomAffine(degrees=15,    # Custom affine transformation
-                                        translate=(0.1, 0.1)),
                 transforms.RandomHorizontalFlip(),     # Custom horizontal flip
                 transforms.RandomVerticalFlip(),       # Custom vertical flip
-                transforms.RandomErasing(scale=(0.02, 0.2)),  # Random erase
-
                 transforms.Normalize(mean=[0.865, 0.865, 0.865], std=[0.26, 0.26, 0.26])
             ])
         else:

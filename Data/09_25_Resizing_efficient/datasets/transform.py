@@ -33,7 +33,7 @@ class AlbumentationsTransform1:
 class AlbumentationsTransform2:
     def __init__(self, is_train: bool = True):
         common_transforms = [
-            A.Resize(336, 336),
+            A.Resize(300, 300),
             A.Normalize(mean=[0.865, 0.865, 0.865], std=[0.26, 0.26, 0.26]),
             ToTensorV2()
         ]
@@ -56,10 +56,10 @@ class AlbumentationsTransform2:
         return transformed['image']
     
 
-class AlbumentationsTransform2:
+class AlbumentationsTransform3:
     def __init__(self, is_train: bool = True):
         common_transforms = [
-            A.Resize(448, 448),
+            A.Resize(336, 336),
             A.Normalize(mean=[0.865, 0.865, 0.865], std=[0.26, 0.26, 0.26]),
             ToTensorV2()
         ]
@@ -108,6 +108,8 @@ class TransformSelector:
             self.transform_type = "albumentations1"
         elif transform_type == "albumentations2":
             self.transform_type = "albumentations2"
+        elif transform_type == "albumentations3":
+            self.transform_type = "albumentations3"    
         elif transform_type == "torchvision":
             self.transform_type = "torchvision"
         else:
@@ -118,6 +120,8 @@ class TransformSelector:
             return AlbumentationsTransform1(is_train=is_train)
         elif self.transform_type == "albumentations2":
             return AlbumentationsTransform2(is_train=is_train)
+        elif self.transform_type == "albumentations3":
+            return AlbumentationsTransform3(is_train=is_train)
         elif self.transform_type == "torchvision":
             return TorchvisionTransform(is_train=is_train)
 
