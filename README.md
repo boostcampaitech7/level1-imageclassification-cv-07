@@ -1,42 +1,56 @@
-# 🏆 Sketch Image Data Classification
-![Screenshot of AI ATage Competition](https://github.com/user-attachments/assets/44257121-d0b1-41ed-aa4c-8208da7ba2a8)
-대회 간략한 설명
+<div align='center'>
+  <h1>🏆 Sketch Image Data Classification</h1>
+  <img src='https://github.com/user-attachments/assets/bcb2cbdc-acb6-4ee4-815f-92089903456e'/>
+</div><br>
 
-## Project Overview
+**Goal :** 주어진 스케치 데이터를 활용하여 모델을 제작하고 제공된 테스트 세트의 각 이미지에 대해 올바른 레이블 예측 <br>
+**Data :** 원본 ImageNet Sketch 데이터셋 중 상위 500개 객체(class)의 25,035개의 이미지 데이터
 
-> 팀 목표
+## [1] Project Overview
+### ⏲️ Timeline (09/03 - 09/26)
+1. EDA 및 baseline code 분석
+2. Baseline model 선정
+3. 코드 개선 및 협업 툴 추가
+4. Baseline model 일반화 성능 개선
+5. 결과 분석
 
-1. 
-2.
-3.
+### 🥇 최종 결과
+- 최종 리더보드 순위 캡쳐
+- 랩업 리포트 링크
 
-> 진행 일정
+## [2] Environment
+- OS : Linux-5.4.0
+- GPU : Tesla V100 (32GB)
+- Python Version: 3.10.13
+- IDE: Visual Studio Code
+- Tool : Github, Slack, Zoom
+- Experiment Tracking: Weights and Biases (WandB)
 
-09/03 - 09/26
-> 최종결과 🥇
-
-- 최종 리더보드 순위
-- 랩업 리포트
-
-## Environment
-
-## File Tree
+## [3] File Tree
 ```
-  ├─Image
-  ├─Report : 랩업 리포트
-  ├─main : main code
-  ├─EDA.ipynb : EDA 
+  ├─Report : report file
+  ├─Model : final model code
+    ├─Model.txt
+    ├─datasets
+      ├─custom_dataset.py
+      ├─transform.py
+    ├─models
+      ├─model_selector.py
+    ├─utils
+      ├─train_utils.py
+    ├─config.json
+    ├─inference.py
+    ├─inference.sh
+    ├─train.py
+    ├─train.sh
   ├─README.md
 ```
-+ 파일 설명 간단히
+## [4] Project Workflow
 
-## Project Workflow
+## [5] Final Model Architecture
 
-## Final Model Architecture
-최종 모델 정리
-
-## Team Members
 <div align='center'>
+  <h1>Team Memebers</h1>
   <h3>럭키비키🍀</h3>
   <table>
     <tr>
