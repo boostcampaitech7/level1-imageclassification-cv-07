@@ -61,7 +61,7 @@ def main(config):
 
     # 테스트 데이터셋 및 데이터로더 생성
     test_dataset = CustomDataset(root_dir=config['test_data_dir'], info_df=test_info, transform=test_transform, is_inference=True)
-    test_loader = DataLoader(test_dataset, batch_size=16, shuffle=False)
+    test_loader = DataLoader(test_dataset, batch_size=8, shuffle=False)
 
     # 모델 설정
     model_selector = ModelSelector(model_type="timm", num_classes=config['num_classes'], model_name=config['model_name'], pretrained=False)
