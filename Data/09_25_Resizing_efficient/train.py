@@ -48,12 +48,7 @@ def send_slack_dm(token: str, user_id: str, message: str):
 # 메인 학습 함수
 def main(config):
     try:
-        # W&B 초기화
-        wandb.init(project=config['wandb_project'], 
-                   config=config,
-                   name=f"{config['model_name']}_{config['person_name']}_{config['version']}",
-                   entity='luckyvicky'
-                   )
+        
 
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -127,6 +122,13 @@ def main(config):
             train_loss, train_acc = trainer.train_epoch()
             val_loss, val_acc = trainer.validate()
 
+            if epoch == 0:
+                # W&B 초기화
+                wandb.init(project=config['wandb_project'], 
+                        config=config,
+                        name=f"{config['model_name']}_{config['person_name']}_{config['version']}",
+                        entity='luckyvicky'
+                        )
             # W&B에 로그 기록
             wandb.log({
                 "epoch": epoch + 1,
@@ -142,7 +144,7 @@ def main(config):
 
             # W&B 모델 가중치 업로드
             #wandb.save(os.path.join(config['result_path'], f"model_epoch_{epoch}.pt"))
-            
+            '''
             if epoch == 9:
                 
                 # 변환 설정 (albumentations 사용)
@@ -178,7 +180,7 @@ def main(config):
                 scheduler = StepLR(optimizer, step_size=2 * len(train_loader), gamma=0.9)
                 loss_fn = nn.CrossEntropyLoss(label_smoothing=0.05)
                 trainer = Trainer(model, device, train_loader, val_loader, optimizer, scheduler, loss_fn, config['epochs'], config['result_path'])
-
+            '''
 
         # 학습 완료 후 Slack DM 전송
         slack_token = config['slack_token']

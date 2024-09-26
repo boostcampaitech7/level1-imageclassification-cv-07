@@ -48,12 +48,6 @@ def send_slack_dm(token: str, user_id: str, message: str):
 # 메인 학습 함수
 def main(config):
     try:
-        # W&B 초기화
-        wandb.init(project=config['wandb_project'], 
-                   config=config,
-                   name=f"{config['model_name']}_{config['person_name']}_{config['version']}",
-                   entity='luckyvicky'
-                   )
 
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -86,37 +80,38 @@ def main(config):
 
         """
         # 변환 설정 (albumentations 사용)
-        transform_selector = TransformSelector(transform_type="albumentations1")
+        transform_selector = TransformSelector(transform_type="albumentations2")
         train_transform = transform_selector.get_transform(is_train=True)
         val_transform = transform_selector.get_transform(is_train=False)
 
         # 데이터셋 및 데이터로더 생성 (train, valid)
         train_dataset = CustomDataset(root_dir=config['train_data_dir'], info_df=train_df, transform=train_transform)
         val_dataset = CustomDataset(root_dir=config['train_data_dir'], info_df=val_df, transform=val_transform)
-        train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
-        val_loader = DataLoader(val_dataset, batch_size=64, shuffle=False)
+        train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+        val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False)
 
         # 모델 설정
         model_selector = ModelSelector(model_type="timm", num_classes=len(train_info['target'].unique()), model_name=config['model_name'], pretrained=True)
         model = model_selector.get_model()
         
-        #model = timm.create_model("wide_resnet50_2", num_classes=500, pretrained=True)
-        #model_path = '/data/ephemeral/home/Jihwan/level1-imageclassification-cv-07/Data/09_24_Resizing/results/best_model_0.9822.pt'
+        model = timm.create_model("wide_resnet50_2", num_classes=500, pretrained=True)
+        model_path = '/data/ephemeral/home/Jihwan/level1-imageclassification-cv-07/Data/09_24_Resizing_resnet/results/best_model_4.1051.pt'
 
         # Load the state dictionary from the file
-        #state_dict = torch.load(model_path)
+        state_dict = torch.load(model_path)
+        new_state_dict = {k[6:]: v for k, v in state_dict.items() if k.startswith('model.')}
 
         # Remove the 'model.' prefix from the keys
 
         # Load the modified state dictionary into the model
-        #model.load_state_dict(state_dict)
+        model.load_state_dict(new_state_dict)
         
         model.to(device)
 
         # 옵티마이저 및 스케줄러
         optimizer = optim.SGD(model.parameters(), lr=0.01)
-        scheduler = StepLR(optimizer, step_size=2 * len(train_loader), gamma=1)
-        loss_fn = nn.CrossEntropyLoss(label_smoothing=0.05)
+        scheduler = StepLR(optimizer, step_size=2 * len(train_loader), gamma=0.95)
+        loss_fn = nn.CrossEntropyLoss(label_smoothing=0.1)
 
         # Trainer 설정
         trainer = Trainer(model, device, train_loader, val_loader, optimizer, scheduler, loss_fn, config['epochs'], config['result_path'])
@@ -126,7 +121,14 @@ def main(config):
             print(f"Epoch {epoch+1}/{config['epochs']}")
             train_loss, train_acc = trainer.train_epoch()
             val_loss, val_acc = trainer.validate()
-
+            
+            # W&B 초기화
+            wandb.init(project=config['wandb_project'], 
+                    config=config,
+                    name=f"{config['model_name']}_{config['person_name']}_{config['version']}",
+                    entity='luckyvicky'
+                    )
+        
             # W&B에 로그 기록
             wandb.log({
                 "epoch": epoch + 1,
@@ -143,6 +145,7 @@ def main(config):
             # W&B 모델 가중치 업로드
             #wandb.save(os.path.join(config['result_path'], f"model_epoch_{epoch}.pt"))
             
+            """
             if epoch == 9:
                 
                 # 변환 설정 (albumentations 사용)
@@ -153,14 +156,39 @@ def main(config):
                 # 데이터셋 및 데이터로더 생성 (train, valid)
                 train_dataset = CustomDataset(root_dir=config['train_data_dir'], info_df=train_df, transform=train_transform)
                 val_dataset = CustomDataset(root_dir=config['train_data_dir'], info_df=val_df, transform=val_transform)
+                train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+                val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False)
+                
+                optimizer = optim.SGD(model.parameters(), lr=0.009)
+                scheduler = StepLR(optimizer, step_size=2 * len(train_loader), gamma=0.95)
+                loss_fn = nn.CrossEntropyLoss(label_smoothing=0.05)
+                trainer = Trainer(model, device, train_loader, val_loader, optimizer, scheduler, loss_fn, config['epochs'], config['result_path'])
+                4
+            """
+            
+            
+            if epoch == 9:
+                
+                # 변환 설정 (albumentations 사용)
+                transform_selector = TransformSelector(transform_type="albumentations3")
+                train_transform = transform_selector.get_transform(is_train=True)
+                val_transform = transform_selector.get_transform(is_train=False)
+
+                # 데이터셋 및 데이터로더 생성 (train, valid)
+                train_dataset = CustomDataset(root_dir=config['train_data_dir'], info_df=train_df, transform=train_transform)
+                val_dataset = CustomDataset(root_dir=config['train_data_dir'], info_df=val_df, transform=val_transform)
                 train_loader = DataLoader(train_dataset, batch_size=config['batch_size'], shuffle=True)
                 val_loader = DataLoader(val_dataset, batch_size=config['batch_size'], shuffle=False)
                 
                 optimizer = optim.SGD(model.parameters(), lr=0.009)
-                scheduler = StepLR(optimizer, step_size=2 * len(train_loader), gamma=0.9)
+                scheduler = StepLR(optimizer, step_size=4 * len(train_loader), gamma=0.9)
                 loss_fn = nn.CrossEntropyLoss(label_smoothing=0.05)
                 trainer = Trainer(model, device, train_loader, val_loader, optimizer, scheduler, loss_fn, config['epochs'], config['result_path'])
-
+                
+            
+        
+                
+          
         # 학습 완료 후 Slack DM 전송
         slack_token = config['slack_token']
         slack_user_id = config['slack_user_id']

@@ -7,7 +7,7 @@ from torchvision import transforms
 class AlbumentationsTransform1:
     def __init__(self, is_train: bool = True):
         common_transforms = [
-            A.Resize(224, 224),
+            A.Resize(336, 336),
             A.Normalize(mean=[0.865, 0.865, 0.865], std=[0.26, 0.26, 0.26]),
             ToTensorV2()
         ]
