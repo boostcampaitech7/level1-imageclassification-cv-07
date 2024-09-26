@@ -1,0 +1,20 @@
+{
+  "train_data_dir": "/data/ephemeral/home/data/train",  
+  "test_data_dir": "/data/ephemeral/home/data/test",  
+  "data_info_file": "/data/ephemeral/home/data/train.csv",
+  "result_path": "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/LV1/results/coatnet_2_rw_224",
+  "model_name": "coatnet_2_rw_224",
+  "output_path": "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/LV1/output/coatnet_2_rw_224/predictions.csv",
+  "epochs": 15,
+  "batch_size": 32,
+  "learning_rate": 0.005,
+  "num_classes": 500,
+  "test_info_file": "/data/ephemeral/home/data/test.csv",
+  "slack_token": "your token",
+  "slack_user_id": "your id",
+  "wandb_project": "sketch_classification",
+  "version": "v1",
+  "person_name": "dj",
+  "cutmix" : "False",
+  "mixup" : "False"
+}
