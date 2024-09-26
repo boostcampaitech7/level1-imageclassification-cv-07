@@ -10,7 +10,7 @@
 ### ⏲️ Timeline (09/03 - 09/26)
 1. EDA 및 baseline code 분석
 2. Baseline model 선정
-3. 코드 개선 및 협업 툴 추가
+3. 모듈화 및 협업 툴 추가
 4. Baseline model 일반화 성능 개선
 5. 결과 분석
 
@@ -23,7 +23,7 @@
 - GPU : Tesla V100 (32GB)
 - Python Version: 3.10.13
 - IDE: Visual Studio Code
-- Tool : Github, Slack, Zoom
+- Tool : Github, Slack, Notion, Zoom
 - Experiment Tracking: Weights and Biases (WandB)
 
 ## [3] File Tree
@@ -46,6 +46,33 @@
   ├─README.md
 ```
 ## [4] Project Workflow
+1. EDA 및 baseline code 분석
+   - 데이터는 Traindata 15,021개와 Private&Public Testdata 10,014개로 구성
+   - Traindata : 15021개의 항목과 3개의 컬럼(class_name, image_path, target)으로 구성
+   - Testdata : 10014개의 항목과 1개의 컬럼(image_path)으로 구성
+   - 500개의 클래스가 있고 각 클래스마다 29~31개의 데이터로 구성
+   - 분석한 데이터 특징
+     -  흑백 이미지가 많지만 컬러 이미지도 존재
+     -  스케치 선의 두께, 이미지 크기, 이미지의 해상도가 다양함
+     -  한 이미지 안에 여러 개체가 들어있는 이미지도 존재
+     -  정면, 측면 혹은 뒤집어진 이미지도 존재
+   -  기본 baseline_code 모델의 정확도는 약 68.4%로 확인
+2. Baseline model 선정
+   <br><br><img src="https://github.com/user-attachments/assets/e484fec4-ef59-4b43-9fda-7ae2ecdf7d72" width="25%"/><br>
+   - 다양한 backbone 모델 실험 후 최종적으로 가장 높은 88.3%의 public score를 달성한 **Coatnet_3_rw_224**를 baseline model로 선정
+3. 모듈화 및 협업 툴 추가
+   - Weights and Biases (WandB) 사용
+   - github repository와 로컬 작업 공간 연결
+   - tmux 사용
+   - slack api 활용 모델 학습 완료 알림 자동화
+4. Baseline model 일반화 성능 개선
+   1) Data Augmentation
+   2) K-fold
+   3) Ensemble
+   4) Other Experiments
+5. 최종 결과 분석
+
+
 
 ## [5] Final Model Architecture
 
