@@ -15,6 +15,7 @@ import wandb  # W&B 추가
 from sklearn.model_selection import train_test_split
 import os
 import traceback  # 오류 스택 트레이스를 캡처하기 위한 모듈
+from sklearn.model_selection import StratifiedKFold
 
 # Slack 알림 함수 (DM용)
 def send_slack_dm(token: str, user_id: str, message: str):
@@ -59,72 +60,53 @@ def main(config):
         # 데이터 로드
         train_info = pd.read_csv(config['data_info_file'])
         
+        models = []
+        for fold in range(5):
         # # 데이터셋을 train과 valid로 나눔 
-        train_df, val_df = train_test_split(train_info, test_size=0.2, stratify=train_info['target'])
+            train_df, val_df = train_test_split(train_info, test_size=0.2, stratify=train_info['target'])
 
-        """
-        # train_index.csv와 val_index.csv 경로
-        py_dir_path = os.path.dirname(os.path.abspath(__file__))
-        rel_train_index_path = os.path.normpath("datasets/train_index.csv")
-        rel_val_index_path = os.path.normpath("datasets/val_index.csv")
+            # 변환 설정 (albumentations 사용)
+            transform_selector = TransformSelector(transform_type="albumentations")
+            train_transform = transform_selector.get_transform(is_train=True)
+            val_transform = transform_selector.get_transform(is_train=False)
 
-        train_index_path = os.path.join(py_dir_path, rel_train_index_path)
-        val_index_path = os.path.join(py_dir_path, rel_val_index_path)
+            # 데이터셋 및 데이터로더 생성 (train, valid)
+            train_dataset = CustomDataset(root_dir=config['train_data_dir'], info_df=train_df, transform=train_transform)
+            val_dataset = CustomDataset(root_dir=config['train_data_dir'], info_df=val_df, transform=val_transform)
+            train_loader = DataLoader(train_dataset, batch_size=config['batch_size'], shuffle=True)
+            val_loader = DataLoader(val_dataset, batch_size=config['batch_size'], shuffle=False)
 
-        # # train_index.csv와 val_index.csv 저장
-        # train_df.index.to_series().to_csv(train_index_path, index = False, header = False)
-        # val_df.index.to_series().to_csv(val_index_path, index = False, header = False)
+            # 모델 설정
+            model_selector = ModelSelector(model_type="timm", num_classes=len(train_info['target'].unique()), model_name=config['model_name'], pretrained=True)
+            model = model_selector.get_model()
+            model.to(device)
 
-        # train_index.csv와 val_index.csv를 이용하여 train_df와 val_df를 로드       
-        train_index = pd.read_csv(train_index_path, header = None).squeeze()
-        val_index = pd.read_csv(val_index_path, header = None).squeeze()
+            # 옵티마이저 및 스케줄러
+            optimizer = optim.SGD(model.parameters(), lr=config['learning_rate'], weight_decay=1e-3)
+            scheduler = StepLR(optimizer, step_size=2 * len(train_loader), gamma=0.5)
+            loss_fn = nn.CrossEntropyLoss(label_smoothing=0.1)
 
-        train_df = train_info.loc[train_index]
-        val_df = train_info.loc[val_index]
-
-        """
-        # 변환 설정 (albumentations 사용)
-        transform_selector = TransformSelector(transform_type="albumentations")
-        train_transform = transform_selector.get_transform(is_train=True)
-        val_transform = transform_selector.get_transform(is_train=False)
-
-        # 데이터셋 및 데이터로더 생성 (train, valid)
-        train_dataset = CustomDataset(root_dir=config['train_data_dir'], info_df=train_df, transform=train_transform)
-        val_dataset = CustomDataset(root_dir=config['train_data_dir'], info_df=val_df, transform=val_transform)
-        train_loader = DataLoader(train_dataset, batch_size=config['batch_size'], shuffle=True)
-        val_loader = DataLoader(val_dataset, batch_size=config['batch_size'], shuffle=False)
-
-        # 모델 설정
-        model_selector = ModelSelector(model_type="timm", num_classes=len(train_info['target'].unique()), model_name=config['model_name'], pretrained=True)
-        model = model_selector.get_model()
-        model.to(device)
-
-        # 옵티마이저 및 스케줄러
-        optimizer = optim.SGD(model.parameters(), lr=config['learning_rate'], weight_decay=0.01)
-        scheduler = StepLR(optimizer, step_size=3 * len(train_loader), gamma=0.)
-        loss_fn = nn.CrossEntropyLoss(label_smoothing=0.08)
-
-        # Trainer 설정
-        trainer = Trainer(model, device, train_loader, val_loader, optimizer, scheduler, loss_fn, config['epochs'], config['result_path'])
+            # Trainer 설정
+            trainer = Trainer(model, device, train_loader, val_loader, optimizer, scheduler, loss_fn, config['epochs'], config['result_path'], fold)
 
         # 학습 과정에서 W&B 로깅 추가
-        for epoch in range(config['epochs']):
-            print(f"Epoch {epoch+1}/{config['epochs']}")
-            train_loss, train_acc = trainer.train_epoch()
-            val_loss, val_acc = trainer.validate()
+            for epoch in range(config['epochs']):
+                print(f"Epoch {epoch+1}/{config['epochs']}")
+                train_loss, train_acc = trainer.train_epoch()
+                val_loss, val_acc = trainer.validate()
 
-            # W&B에 로그 기록
-            wandb.log({
-                "epoch": epoch + 1,
-                "train_loss": train_loss,
-                "train_accuracy": train_acc,
-                "val_loss": val_loss,
-                "val_accuracy": val_acc,
-                "learning_rate": optimizer.param_groups[0]['lr']
-            })
+                # W&B에 로그 기록
+                wandb.log({
+                    "epoch": epoch + 1,
+                    "train_loss": train_loss,
+                    "train_accuracy": train_acc,
+                    "val_loss": val_loss,
+                    "val_accuracy": val_acc,
+                    "learning_rate": optimizer.param_groups[0]['lr']
+                })
 
-            # 모델 저장
-            trainer.save_model(epoch, val_loss)
+                # 모델 저장
+                trainer.save_model(epoch, val_loss, fold)
 
             # W&B 모델 가중치 업로드
             #wandb.save(os.path.join(config['result_path'], f"model_epoch_{epoch}.pt"))

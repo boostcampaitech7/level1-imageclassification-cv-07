@@ -43,7 +43,7 @@ def main(config):
     test_info = pd.read_csv(config['test_info_file'])
 
     # 변환 설정 (val_transform 사용)
-    transform_selector = TransformSelector(transform_type="albumentations")
+    transform_selector = TransformSelector(transform_type="albumentations2")
     test_transform = transform_selector.get_transform(is_train=False)
 
     # 테스트 데이터셋 및 데이터로더 생성
@@ -51,7 +51,7 @@ def main(config):
     test_loader = DataLoader(test_dataset, batch_size=config['batch_size'], shuffle=False)
 
     # 모델 설정
-    model_selector = ModelSelector(model_type="timm", num_classes=config['num_classes'], model_name=config['model_name'], pretrained=False)
+    model_selector = ModelSelector(model_type="timm", num_classes=config['num_classes'], model_name="wide_resnet50_2", pretrained=False)
     model = model_selector.get_model()
 
     # 베스트 모델 경로 설정

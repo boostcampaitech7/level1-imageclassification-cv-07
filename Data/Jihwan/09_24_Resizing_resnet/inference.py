@@ -43,7 +43,7 @@ def main(config):
     test_info = pd.read_csv(config['test_info_file'])
 
     # 변환 설정 (val_transform 사용)
-    transform_selector = TransformSelector(transform_type="albumentations")
+    transform_selector = TransformSelector(transform_type="albumentations3")
     test_transform = transform_selector.get_transform(is_train=False)
 
     # 테스트 데이터셋 및 데이터로더 생성
@@ -51,15 +51,18 @@ def main(config):
     test_loader = DataLoader(test_dataset, batch_size=config['batch_size'], shuffle=False)
 
     # 모델 설정
-    model_selector = ModelSelector(model_type="timm", num_classes=config['num_classes'], model_name=config['model_name'], pretrained=False)
+    model_selector = ModelSelector(model_type="timm", num_classes=config['num_classes'], model_name="wide_resnet50_2", pretrained=False)
     model = model_selector.get_model()
 
     # 베스트 모델 경로 설정
-    model_path = get_best_model_path(config['result_path'])
+    model_path = '/data/ephemeral/home/Jihwan/level1-imageclassification-cv-07/Data/09_24_Resizing_resnet/results/best_model_1.7192.pt'
     print(f"Loading best model from {model_path}")
 
     # 저장된 모델 로드
-    model.load_state_dict(torch.load(model_path, map_location=device))
+    state_dict = torch.load(model_path, map_location=device)
+    new_state_dict = {f'model.{k}': v for k, v in state_dict.items()}
+    
+    model.load_state_dict(new_state_dict)
     model.to(device)
 
     # 추론 실행

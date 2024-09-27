@@ -8,7 +8,7 @@ class AlbumentationsTransform:
     def __init__(self, is_train: bool = True):
         common_transforms = [
             A.Resize(224, 224),
-            A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+            A.Normalize(mean=[0.865, 0.865, 0.865], std=[0.26, 0.26, 0.26]),
             ToTensorV2()
         ]
         if is_train:
@@ -17,6 +17,7 @@ class AlbumentationsTransform:
                     A.HorizontalFlip(p=0.5),
                     A.Rotate(limit=15),
                     A.RandomBrightnessContrast(p=0.2),
+                    #A.CoarseDropout(max_holes=8, max_height=32, max_width=32, min_holes=1, min_height=16, min_width=16, p=1.0), # coarseDropout 추가 
                 ] + common_transforms
             )
         else:
@@ -63,3 +64,5 @@ class TransformSelector:
             return AlbumentationsTransform(is_train=is_train)
         elif self.transform_type == "torchvision":
             return TorchvisionTransform(is_train=is_train)
+
+

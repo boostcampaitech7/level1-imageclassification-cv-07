@@ -8,18 +8,34 @@ from models.model_selector import ModelSelector
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 import argparse
+import numpy as np
 
-# 추론(inference) 함수
-def inference(model, device, test_loader):
-    model.eval()
-    predictions = []
-    with torch.no_grad():
-        for images in tqdm(test_loader, desc="Inference"):
-            images = images.to(device)
-            outputs = model(images)
-            preds = torch.argmax(outputs, dim=1)
-            predictions.extend(preds.cpu().numpy())
-    return predictions
+def ensemble_predict(models, device, dataloader):
+    predictions = np.zeros((len(dataloader.dataset), 500)) # 예측값을 저장할 배열을 초기화
+    
+    count = 0
+    for model in models:
+        count += 1
+        print(f"\nmodel{count}")
+        model.eval()
+        with torch.no_grad():
+            fold_predictions = [] # 각 모델의 예측값을 저장할 리스트를 초기화
+            for images in tqdm(dataloader, desc="Inference"):
+                images = images.to(device)
+                outputs = model(images)
+                pred = torch.softmax(outputs, dim=1)  # 소프트맥스 함수 적용
+                fold_predictions.extend(pred.cpu().numpy())
+            fold_predictions = np.array(fold_predictions)
+            print(f"fold_predictions shape: {fold_predictions.shape}")
+            print(f"fold_predictions: {fold_predictions}")
+            predictions += fold_predictions
+    predictions /= len(models)  # 모델의 개수로 나눠서 평균화
+    final_predictions = np.argmax(predictions, axis=1)  # 가장 높은 확률을 가진 클래스를 선택
+    print(f"final_predictions shape: {final_predictions.shape}")
+    print(f"final_predictions: {final_predictions}")
+    return final_predictions # 최종 예측값 반환
+
+
 
 # 'best_model' 파일을 찾는 함수 (가장 최근에 저장된 파일 선택)
 def get_best_model_path(directory):
@@ -55,15 +71,20 @@ def main(config):
     model = model_selector.get_model()
 
     # 베스트 모델 경로 설정
-    model_path = get_best_model_path(config['result_path'])
-    print(f"Loading best model from {model_path}")
+    
+    
 
-    # 저장된 모델 로드
-    model.load_state_dict(torch.load(model_path, map_location=device))
-    model.to(device)
+    models = []
+    for fold in range(5):
+        model_path = get_best_model_path(os.path.join(config['result_path'], f'fold_{fold}'))
+        print(f"Loading best model from {model_path}")
+        model.load_state_dict(torch.load(model_path, map_location=device))
+        model.to(device)
+        models.append(model)
+
 
     # 추론 실행
-    predictions = inference(model, device, test_loader)
+    predictions = ensemble_predict(models, device, test_loader)
 
     # 결과 저장 디렉터리 확인 및 생성
     output_dir = os.path.dirname(config['output_path'])

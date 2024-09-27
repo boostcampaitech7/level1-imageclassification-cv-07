@@ -28,7 +28,9 @@ baseline_model/
 *.pt
 *.csv
 tta_check.ipynb
+config_vgg.json
 
 run_scripts
 result
 config_dj*.json
+config.json
