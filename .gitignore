@@ -7,17 +7,28 @@ output/
 .vscode
 **/.env
 .vscode
-config_sj.json
+config_sj*.json
 train_sj.sh
 config_dj.json
+config.json
 train_dj.sh
 baseline/
 data/
 train_result/
-Lv1/
+LV1/
 sojeong_code/
+jeongseon_code/
+.env
+train.sh
+baseline_model/
+
+
 *.png
 *.jpeg
+*.pt
+*.csv
+tta_check.ipynb
+config_vgg.json
 
 run_scripts
 result
@@ -25,3 +36,4 @@ config_dj*.json
 exp*.json
 *.pt
 efficientnet_b4_5fold_softmax.csv
+config.json
