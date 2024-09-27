@@ -11,7 +11,6 @@ class CustomDataset(Dataset):
         self.transform = transform
         self.is_inference = is_inference
         self.image_paths = info_df['image_path'].tolist()
-        self.exp = exp
         self.use_pseudo_label = 0
 
         if not self.is_inference:

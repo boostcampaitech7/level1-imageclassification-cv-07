@@ -106,7 +106,8 @@ if __name__ == "__main__":
     test_transform = transform_selector.get_transform(is_train=False)
 
     # 테스트 데이터셋 및 데이터로더 생성
-    test_dataset = CustomDataset(root_dir=config['test_data_dir'], info_df=test_info, transform=test_transform, is_inference=True)
+    exp = {}
+    test_dataset = CustomDataset(exp, config, info_df=test_info, transform=test_transform, is_inference=True)
     test_loader = DataLoader(test_dataset, batch_size=config['batch_size'], shuffle=False)
     predicts = np.zeros((len(test_loader.dataset), 500))
 

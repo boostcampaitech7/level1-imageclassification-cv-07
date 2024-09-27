@@ -24,3 +24,4 @@ result
 config_dj*.json
 exp*.json
 *.pt
+efficientnet_b4_5fold_softmax.csv
