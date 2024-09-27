@@ -1,0 +1,1 @@
+python /data/ephemeral/home/Seungcheol/skf_model/0924_model_ensemble/inference.py --config /data/ephemeral/home/Seungcheol/skf_model/0924_model_ensemble/exp/ensemble0.json
