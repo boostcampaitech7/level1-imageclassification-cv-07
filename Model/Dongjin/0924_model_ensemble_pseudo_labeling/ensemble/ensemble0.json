@@ -1,0 +1,13 @@
+{
+    "batch_size": 32,
+    "num_classes": 500,
+    "result_paths": [
+        "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0924_model_ensemble_pseudo_labeling/result/efficientnet_b4_kfold0", 
+        "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0924_model_ensemble_pseudo_labeling/result/efficientnet_b4_kfold1",
+        "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0924_model_ensemble_pseudo_labeling/result/efficientnet_b4_kfold2",
+        "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0924_model_ensemble_pseudo_labeling/result/efficientnet_b4_kfold3",
+        "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0924_model_ensemble_pseudo_labeling/result/efficientnet_b4_kfold4"
+    ],
+    "output_dir": "efficientnet_b4_5fold"
+}
+
