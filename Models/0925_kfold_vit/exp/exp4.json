@@ -1,0 +1,23 @@
+{
+    "output_fold_path_format": "result/{model_name}_kfold4",
+    "model_name": "vit_large_patch16_224.augreg_in21k_ft_in1k",
+    "optimizer": "SGD",
+    "version": "vit_k4",
+    "person_name": "sc",
+    "epochs": 10,
+    "batch_size": 64,
+    "learning_rate": 0.01,
+    "num_classes": 500,
+    "label_smoothing": 0.05,
+    "StepLR_step_size": 2,
+    "stepLR_gamma": 0.5,
+    "num_model_save": 1,
+    "valid_split_ratio": 0.2,
+    "random_select_dataset": 0,
+    "train_index_path": "/data/ephemeral/home/Seungcheol/skf_model/0924_model_ensemble/datasets/index/train_index0.csv",
+    "valid_index_path": "/data/ephemeral/home/Seungcheol/skf_model/0924_model_ensemble/datasets/index/valid_index0.csv",
+    "result_path": "/data/ephemeral/home/Seungcheol/skf_model/0924_model_ensemble/result/vit_large_patch16_224.augreg_in21k_ft_in1k_kfold4",
+    "result_fold": "vit_large_patch16_224.augreg_in21k_ft_in1k_kfold4",
+    "output_path": "/data/ephemeral/home/Seungcheol/skf_model/0924_model_ensemble/result/vit_large_patch16_224.augreg_in21k_ft_in1k_kfold4/vit_large_patch16_224.augreg_in21k_ft_in1k_kfold4_predict.csv",
+    "log_path": "/data/ephemeral/home/Seungcheol/skf_model/0924_model_ensemble/result/vit_large_patch16_224.augreg_in21k_ft_in1k_kfold4/vit_large_patch16_224.augreg_in21k_ft_in1k_kfold4_log.csv"
+}
