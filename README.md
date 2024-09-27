@@ -8,16 +8,16 @@
 
 ## [1] Project Overview
 ### ⏲️ Timeline (09/03 - 09/26)
-<img src='https://github.com/user-attachments/assets/5bf0cf9c-1210-4234-a26c-8e29abe83441' width="70%"/>
+<img src='https://github.com/user-attachments/assets/5bf0cf9c-1210-4234-a26c-8e29abe83441' width="80%"/>
 
 1. EDA 및 baseline code 분석
 2. Baseline model 선정
-3. 모듈화 및 협업 툴 추가
-4. Baseline model 일반화 성능 개선
-5. 결과 분석
+3. Baseline model 일반화 성능 개선
+4. 최종 결과 분석
+
 
 ### 🥇 최종 결과
-- 최종 리더보드 순위 캡쳐
+<img width="80%" alt="Screenshot 2024-09-26 at 7 05 51 PM" src="https://github.com/user-attachments/assets/a98cf160-e42a-4861-8455-10fce5ccba0a"><br>
 - 랩업 리포트 링크
 
 ## [2] Environment
@@ -61,11 +61,11 @@
    -  기본 baseline_code 모델의 정확도는 약 68.4%로 확인
 2. Baseline model 선정
    - 다양한 backbone 모델 실험 후 최종적으로 가장 높은 88.3%의 public score를 달성한 **Coatnet_3_rw_224**를 baseline model로 선정
-3. 모듈화 및 협업 툴 추가
-   - Weights and Biases (WandB) 사용
-   - github repository와 로컬 작업 공간 연결
-   - tmux 사용
-   - slack api 활용 모델 학습 완료 알림 자동화
+   - 모듈화 및 협업 툴 추가
+     - Weights and Biases (WandB) 사용
+     - github repository와 로컬 작업 공간 연결
+     - tmux 사용
+     - slack api 활용 모델 학습 완료 알림 자동화
 4. Baseline model 일반화 성능 개선
    1) Data Augmentation
    2) K-fold
