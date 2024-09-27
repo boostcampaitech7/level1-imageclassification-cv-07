@@ -1,0 +1,20 @@
+{
+    "batch_size": 32,
+    "num_classes": 500,
+    "result_paths": [
+        "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0924_model_ensemble_pseudo_labeling/result/efficientnet_b4_kfold0",
+        "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0924_model_ensemble_pseudo_labeling/result/efficientnet_b4_kfold1",
+        "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0924_model_ensemble_pseudo_labeling/result/efficientnet_b4_kfold2",
+        "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0924_model_ensemble_pseudo_labeling/result/efficientnet_b4_kfold3",
+        "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0924_model_ensemble_pseudo_labeling/result/efficientnet_b4_kfold4"
+    ],
+    "output_dir": "efficientnet_b4_5fold_0",
+    "train_data_dir": "/data/ephemeral/home/data/train",
+    "test_data_dir": "/data/ephemeral/home/data/test",
+    "data_info_file": "/data/ephemeral/home/data/train.csv",
+    "test_info_file": "/data/ephemeral/home/data/test.csv",
+    "output_dir_path": "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0924_model_ensemble_pseudo_labeling/ensemble_result/efficientnet_b4_5fold_0",
+    "output_path": "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0924_model_ensemble_pseudo_labeling/ensemble_result/efficientnet_b4_5fold_0/efficientnet_b4_5fold_0_predict.csv",
+    "output_softmax_path": "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0924_model_ensemble_pseudo_labeling/ensemble_result/efficientnet_b4_5fold_0/efficientnet_b4_5fold_0_softmax.csv",
+    "output_config_path": "/data/ephemeral/home/Dongjin/git/level1-imageclassification-cv-07/Model/Dongjin/0924_model_ensemble_pseudo_labeling/ensemble_result/efficientnet_b4_5fold_0/efficientnet_b4_5fold_0.json"
+}

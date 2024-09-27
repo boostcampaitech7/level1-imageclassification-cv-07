@@ -1,0 +1,20 @@
+{
+    "batch_size": 16,
+    "num_classes": 500,
+    "result_paths": [
+        "/home/jin/Project/Sketch classification/0924_model_ensemble/result/coatnet_3_rw_224_kfold0",
+        "/home/jin/Project/Sketch classification/0924_model_ensemble/result/coatnet_3_rw_224_kfold1",
+        "/home/jin/Project/Sketch classification/0924_model_ensemble/result/coatnet_3_rw_224_kfold2",
+        "/home/jin/Project/Sketch classification/0924_model_ensemble/result/coatnet_3_rw_224_kfold3",
+        "/home/jin/Project/Sketch classification/0924_model_ensemble/result/coatnet_3_rw_224_kfold4"
+    ],
+    "output_dir": "coatnet_3_rw_224_5fold",
+    "train_data_dir": "/home/jin/Project/Sketch classification/data/train",
+    "test_data_dir": "/home/jin/Project/Sketch classification/data/test",
+    "data_info_file": "/home/jin/Project/Sketch classification/data/train.csv",
+    "test_info_file": "/home/jin/Project/Sketch classification/data/test.csv",
+    "output_dir_path": "/home/jin/Project/Sketch classification/0924_model_ensemble/ensemble_result/coatnet_3_rw_224_5fold",
+    "output_path": "/home/jin/Project/Sketch classification/0924_model_ensemble/ensemble_result/coatnet_3_rw_224_5fold/coatnet_3_rw_224_5fold_predict.csv",
+    "output_softmax_path": "/home/jin/Project/Sketch classification/0924_model_ensemble/ensemble_result/coatnet_3_rw_224_5fold/coatnet_3_rw_224_5fold_softmax.csv",
+    "output_config_path": "/home/jin/Project/Sketch classification/0924_model_ensemble/ensemble_result/coatnet_3_rw_224_5fold/coatnet_3_rw_224_5fold.json"
+}
