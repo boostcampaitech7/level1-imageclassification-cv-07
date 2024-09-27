@@ -1,0 +1,13 @@
+{
+  "train_data_dir": "/data/ephemeral/home/data/train",  
+  "test_data_dir": "/data/ephemeral/home/data/test",  
+  "data_info_file": "/data/ephemeral/home/data/train.csv",
+  "result_path": "/data/ephemeral/home/Sojeong/level1-imageclassification-cv-07/Model/0925ModelSoup/result",
+  "model_name": "coatnet_3_rw_224",
+  "output_path": "/data/ephemeral/home/Sojeong/level1-imageclassification-cv-07/Model/0925ModelSoup/output/predictions_coatnet_soup.csv",
+  "epochs": 15,
+  "batch_size": 32,
+  "num_classes": 500,
+  "test_info_file": "/data/ephemeral/home/data/test.csv",
+ " model_save_dir" : "/data/ephemeral/home/Sojeong/level1-imageclassification-cv-07/Model/0925ModelSoup/result/soup"
+}
