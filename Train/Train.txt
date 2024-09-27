@@ -1,1 +1,0 @@
-훈련 요소 조작 : loss, optimizer, hyper-parameter tuning 등
