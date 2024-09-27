@@ -1,0 +1,12 @@
+{
+    "batch_size": 8,
+    "num_classes": 500,
+    "result_paths": [
+        "/data/ephemeral/home/Seungcheol/skf_model/0924_model_ensemble/result/coatnet",
+        "/data/ephemeral/home/Seungcheol/skf_model/0924_model_ensemble/result/efficientnet",
+        "/data/ephemeral/home/Seungcheol/skf_model/0924_model_ensemble/result/vit"
+    ],
+    "output_path": "/data/ephemeral/home/Seungcheol/skf_model/0924_model_ensemble/ensemble_result/vit_coat_eff_3fold.csv",
+    "output_softmax_path" : "/data/ephemeral/home/Seungcheol/skf_model/0924_model_ensemble/ensemble_result/vit_coat_eff_5fold_softmax.csv"
+}
+

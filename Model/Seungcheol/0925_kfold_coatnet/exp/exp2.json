@@ -1,0 +1,23 @@
+{
+    "output_fold_path_format": "result/{model_name}_kfold2",
+    "model_name": "coatnet_3_rw_224",
+    "optimizer": "SGD",
+    "version": "coatnet_k2",
+    "person_name": "sc",
+    "epochs": 10,
+    "batch_size": 32,
+    "learning_rate": 0.01,
+    "num_classes": 500,
+    "label_smoothing": 0.05,
+    "StepLR_step_size": 2,
+    "stepLR_gamma": 0.5,
+    "num_model_save": 1,
+    "valid_split_ratio": 0.2,
+    "random_select_dataset": 0,
+    "train_index_path": "/data/ephemeral/home/Seungcheol/skf_model/0924_model_ensemble/datasets/index/train_index0.csv",
+    "valid_index_path": "/data/ephemeral/home/Seungcheol/skf_model/0924_model_ensemble/datasets/index/valid_index0.csv",
+    "result_path": "/data/ephemeral/home/Seungcheol/skf_model/0924_model_ensemble/result/coatnet_3_rw_224_kfold2",
+    "result_fold": "coatnet_3_rw_224_kfold2",
+    "output_path": "/data/ephemeral/home/Seungcheol/skf_model/0924_model_ensemble/result/coatnet_3_rw_224_kfold2/coatnet_3_rw_224_kfold2_predict.csv",
+    "log_path": "/data/ephemeral/home/Seungcheol/skf_model/0924_model_ensemble/result/coatnet_3_rw_224_kfold2/coatnet_3_rw_224_kfold2_log.csv"
+}
