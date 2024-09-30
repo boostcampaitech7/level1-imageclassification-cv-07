@@ -83,7 +83,7 @@
 
 
 <div align='center'>
-  <h1>Team Memebers</h1>
+  <h1>Team Members</h1>
   <h3>럭키비키🍀</h3>
   <table>
     <tr>
