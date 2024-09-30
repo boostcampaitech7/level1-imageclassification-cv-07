@@ -73,30 +73,30 @@
 <div align='center'>
   <h1>Team Members</h1>
   <h3>럭키비키🍀</h3>
-  <table>
+  <table width="98%">
     <tr>
-      <td align="center" valign="top" width="100px"><a href="https://github.com/jinlee24"><img src="https://avatars.githubusercontent.com/u/137850412?v=4"></a></td>
-      <td align="center" valign="top" width="100px"><a href="https://github.com/stop0729"><img src="https://avatars.githubusercontent.com/u/78136790?v=4"></a></td>
-      <td align="center" valign="top" width="100px"><a href="https://github.com/yjs616"><img src="https://avatars.githubusercontent.com/u/107312651?v=4"></a></td>
-      <td align="center" valign="top" width="100px"><a href="https://github.com/sng-tory"><img src="https://avatars.githubusercontent.com/u/176906855?v=4"></a></td>
-      <td align="center" valign="top" width="100px"><a href="https://github.com/Soojeoong"><img src="https://avatars.githubusercontent.com/u/100748928?v=4"></a></td>
-      <td align="center" valign="top" width="100px"><a href="https://github.com/cyndii20"><img src="https://avatars.githubusercontent.com/u/90389093?v=4"></a></td>
+      <td align="center" valign="top" width="15%"><a href="https://github.com/jinlee24"><img src="https://avatars.githubusercontent.com/u/137850412?v=4"></a></td>
+      <td align="center" valign="top" width="15%"><a href="https://github.com/stop0729"><img src="https://avatars.githubusercontent.com/u/78136790?v=4"></a></td>
+      <td align="center" valign="top" width="15%"><a href="https://github.com/yjs616"><img src="https://avatars.githubusercontent.com/u/107312651?v=4"></a></td>
+      <td align="center" valign="top" width="15%"><a href="https://github.com/sng-tory"><img src="https://avatars.githubusercontent.com/u/176906855?v=4"></a></td>
+      <td align="center" valign="top" width="15%"><a href="https://github.com/Soojeoong"><img src="https://avatars.githubusercontent.com/u/100748928?v=4"></a></td>
+      <td align="center" valign="top" width="15%"><a href="https://github.com/cyndii20"><img src="https://avatars.githubusercontent.com/u/90389093?v=4"></a></td>
     </tr>
     <tr>
-      <td align="center" valign="top" width="100px">이동진</td>
-      <td align="center" valign="top" width="100px">정지환</td>
-      <td align="center" valign="top" width="100px">유정선</td>
-      <td align="center" valign="top" width="100px">신승철</td>
-      <td align="center" valign="top" width="100px">김소정</td>
-      <td align="center" valign="top" width="100px">서정연</td>
+      <td align="center">이동진</td>
+      <td align="center">정지환</td>
+      <td align="center">유정선</td>
+      <td align="center">신승철</td>
+      <td align="center">김소정</td>
+      <td align="center">서정연</td>
     </tr>
     <tr>
-      <td align="center" valign="top" width="100px">앙상블, pseudo labeling, failure analysis</td>
-      <td align="center" valign="top" width="100px">데이터 전처리, 앙상블, progressive resize, 하이퍼파라미터 조정</td>
-      <td align="center" valign="top" width="100px">데이터 분석 및 전처리, data augmentation, freezing</td>
-      <td align="center" valign="top" width="100px">데이터 전처리, data augmentation, 하이퍼파라미터 조정, 앙상블</td>
-      <td align="center" valign="top" width="100px">프로젝트 스케줄링 및 문서화, freezing, data augmentation, TTA</td>
-      <td align="center" valign="top" width="100px">data augmentation, stratified k-fold, 깃허브 레포지토리 관리</td>
+      <td align="center">앙상블, pseudo labeling, failure analysis</td>
+      <td align="center">데이터 전처리, 앙상블, progressive resize, 하이퍼파라미터 조정</td>
+      <td align="center">데이터 분석 및 전처리, data augmentation, freezing</td>
+      <td align="center">데이터 전처리, data augmentation, 하이퍼파라미터 조정, 앙상블</td>
+      <td align="center">프로젝트 스케줄링 및 문서화, freezing, data augmentation, TTA</td>
+      <td align="center">data augmentation, stratified k-fold, 깃허브 레포지토리 관리</td>
     </tr>
   </table>
 </div>
