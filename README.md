@@ -75,7 +75,7 @@
   <h3>럭키비키🍀</h3>
   <table>
     <tr>
-      <td align="center" valign="top" width="150px"><a href="https://github.com/jinlee24"><img src="https://avatars.githubusercontent.com/u/137850412?v=4"></a></td>
+      <td align="center" valign="top" width="100px"><a href="https://github.com/jinlee24"><img src="https://avatars.githubusercontent.com/u/137850412?v=4"></a></td>
       <td align="center" valign="top" width="100px"><a href="https://github.com/stop0729"><img src="https://avatars.githubusercontent.com/u/78136790?v=4"></a></td>
       <td align="center" valign="top" width="100px"><a href="https://github.com/yjs616"><img src="https://avatars.githubusercontent.com/u/107312651?v=4"></a></td>
       <td align="center" valign="top" width="100px"><a href="https://github.com/sng-tory"><img src="https://avatars.githubusercontent.com/u/176906855?v=4"></a></td>
@@ -91,52 +91,12 @@
       <td align="center" valign="top" width="100px">서정연</td>
     </tr>
     <tr>
-      <td align="center" valign="top" width="100px"> <!-- 동진 -->
-          <ul>
-            <li>앙상블</li>
-            <li>pseudo labeling</li>
-            <li>failure analysis</li>
-          </ul>
-      </td>
-      <td align="center" valign="top" width="100px"> <!-- 지환 -->
-          <ul>
-            <li>데이터 전처리</li>
-            <li>앙상블</li>
-            <li>progressive resize</li>
-            <li>하이퍼파라미터 조정</li>
-          </ul>
-      </td>
-       <td align="center" valign="top" width="100px"> <!-- 정선 -->
-          <ul>
-            <li>데이터 분석 및 전처리</li>
-            <li>data augmentation</li>
-            <li>freezing</li>
-          </ul>
-      </td>
-       <td align="center" valign="top" width="100px"> <!-- 승철 -->
-          <ul>
-            <li>데이터 전처리</li>
-            <li>data augmentation</li>
-            <li>하이퍼파라미터 조정</li>
-            <li>앙상블</li>
-          </ul>
-      </td>
-       <td align="center" valign="top" width="100px"> <!-- 소정 -->
-          <ul>
-            <li>프로젝트 스케줄링</li>
-            <li>문서화</li>
-            <li>freezing</li>
-            <li>augmentation</li>
-            <li>TTA</li>
-          </ul>
-      </td>
-       <td align="center" valign="top" width="100px"> <!-- 정연 -->
-          <ul>
-            <li>Data Augmentation</li>
-            <li>stratified k-fold</li>
-            <li>깃허브 레포지토리 관리</li>
-          </ul>
-      </td>
+      <td align="center" valign="top" width="100px">앙상블, pseudo labeling, failure analysis</td>
+      <td align="center" valign="top" width="100px">데이터 전처리, 앙상블, progressive resize, 하이퍼파라미터 조정</td>
+      <td align="center" valign="top" width="100px">데이터 분석 및 전처리, data augmentation, freezing</td>
+      <td align="center" valign="top" width="100px">데이터 전처리, data augmentation, 하이퍼파라미터 조정, 앙상블</td>
+      <td align="center" valign="top" width="100px">프로젝트 스케줄링 및 문서화, freezing, data augmentation, TTA</td>
+      <td align="center" valign="top" width="100px">data augmentation, stratified k-fold, 깃허브 레포지토리 관리</td>
     </tr>
   </table>
 </div>
