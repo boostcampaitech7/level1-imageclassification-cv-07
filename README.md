@@ -67,15 +67,20 @@
      - tmux 사용
      - slack api 활용 모델 학습 완료 알림 자동화
 4. Baseline model 일반화 성능 개선
-   1) Data Augmentation
-   2) K-fold
-   3) Ensemble
-   4) Other Experiments
-5. 최종 결과 분석
-
-
+   1) Optimizer
+   2) Data Augmentation
+   3) Layer freeze
+   4) Dropout & Batch normalization
+   5) Loss
+   6) Learning rate scheduler
+   7) Progressive resizing (input size)
+   8) Failure Analysis 
+   9) K-fold & Ensemble
+   4) TTA
 
 ## [5] Final Model Architecture
+![image_fma](https://github.com/user-attachments/assets/f1f78ab7-2e73-4b7c-8eac-a120a600ec1a)
+
 
 <div align='center'>
   <h1>Team Memebers</h1>
@@ -92,32 +97,48 @@
     <tr>
       <td valign="top"> <!-- 동진 -->
           <ul>
-              <li>각자 역할</li>
+            <li>앙상블</li>
+            <li>pseudo labeling</li>
+            <li>failure analysis</li>
           </ul>
       </td>
       <td valign="top"> <!-- 지환 -->
           <ul>
-              <li>각자 역할</li>
+            <li>데이터 전처리</li>
+            <li>앙상블</li>
+            <li>progressive resize</li>
+            <li>하이퍼파라미터 조정</li>
           </ul>
       </td>
        <td valign="top"> <!-- 정선 -->
           <ul>
-              <li>각자 역할</li>
+            <li>데이터 분석 및 전처리</li>
+            <li>data augmentation</li>
+            <li>freezing</li>
           </ul>
       </td>
        <td valign="top"> <!-- 승철 -->
           <ul>
-              <li>각자 역할</li>
+            <li>데이터 전처리</li>
+            <li>data augmentation</li>
+            <li>하이퍼파라미터 조정</li>
+            <li>앙상블</li>
           </ul>
       </td>
        <td valign="top"> <!-- 소정 -->
           <ul>
-              <li>각자 역할</li>
+            <li>프로젝트 스케줄링</li>
+            <li>문서화</li>
+            <li>freezing</li>
+            <li>augmentation</li>
+            <li>TTA</li>
           </ul>
       </td>
        <td valign="top"> <!-- 정연 -->
           <ul>
-              <li>각자 역할</li>
+            <li>Data Augmentation</li>
+            <li>stratified k-fold</li>
+            <li>깃허브 레포지토리 관리</li>
           </ul>
       </td>
     </tr>
