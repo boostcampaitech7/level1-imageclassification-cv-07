@@ -52,7 +52,6 @@
    - 다양한 backbone 모델 실험 후 최종적으로 가장 높은 88.3%의 public score를 달성한 **Coatnet_3_rw_224**를 baseline model로 선정
    - 모듈화 및 협업 툴 추가
      - Weights and Biases (WandB) 사용
-     - github repository와 로컬 작업 공간 연결
      - tmux 사용
      - slack api 활용 모델 학습 완료 알림 자동화
 4. Baseline model 일반화 성능 개선
