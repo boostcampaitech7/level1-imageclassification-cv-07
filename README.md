@@ -75,12 +75,12 @@
   <h3>럭키비키🍀</h3>
   <table>
     <tr>
-      <td align="center" valign="top" width="150px"><a href="https://github.com/jinlee24"><img src="https://avatars.githubusercontent.com/u/137850412?v=4" ></a>이동진</td>
-      <td align="center" valign="top" width="150px"><a href="https://github.com/stop0729"><img src="https://avatars.githubusercontent.com/u/78136790?v=4" ></a>정지환</td>
-      <td align="center" valign="top" width="150px"><a href="https://github.com/yjs616"><img src="https://avatars.githubusercontent.com/u/107312651?v=4" ></a>유정선</td>
-      <td align="center" valign="top" width="150px"><a href="https://github.com/sng-tory"><img src="https://avatars.githubusercontent.com/u/176906855?v=4" ></a>신승철</td>
-      <td align="center" valign="top" width="150px"><a href="https://github.com/Soojeoong"><img src="https://avatars.githubusercontent.com/u/100748928?v=4" ></a>김소정</td>
-      <td align="center" valign="top" width="150px"><a href="https://github.com/cyndii20"><img src="https://avatars.githubusercontent.com/u/90389093?v=4"></a>서정연</td>
+      <td align="center" valign="top" width="15%"><a href="https://github.com/jinlee24"><img src="https://avatars.githubusercontent.com/u/137850412?v=4" ></a>이동진</td>
+      <td align="center" valign="top" width="15%"><a href="https://github.com/stop0729"><img src="https://avatars.githubusercontent.com/u/78136790?v=4" ></a>정지환</td>
+      <td align="center" valign="top" width="15%"><a href="https://github.com/yjs616"><img src="https://avatars.githubusercontent.com/u/107312651?v=4" ></a>유정선</td>
+      <td align="center" valign="top" width="15%"><a href="https://github.com/sng-tory"><img src="https://avatars.githubusercontent.com/u/176906855?v=4" ></a>신승철</td>
+      <td align="center" valign="top" width="15%"><a href="https://github.com/Soojeoong"><img src="https://avatars.githubusercontent.com/u/100748928?v=4" ></a>김소정</td>
+      <td align="center" valign="top" width="15%"><a href="https://github.com/cyndii20"><img src="https://avatars.githubusercontent.com/u/90389093?v=4"></a>서정연</td>
     </tr>
     <tr>
       <td valign="top"> <!-- 동진 -->
