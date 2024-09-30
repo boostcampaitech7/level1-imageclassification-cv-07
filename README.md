@@ -18,7 +18,6 @@
 
 ### 🥇 최종 결과
 <img width="80%" alt="Screenshot 2024-09-26 at 7 05 51 PM" src="https://github.com/user-attachments/assets/a98cf160-e42a-4861-8455-10fce5ccba0a"><br>
-- 랩업 리포트 링크
 
 ## [2] Environment
 - OS : Linux-5.4.0
@@ -30,21 +29,11 @@
 
 ## [3] File Tree
 ```
-  ├─Report : report file
-  ├─Model : final model code
-    ├─Model.txt
-    ├─datasets
-      ├─custom_dataset.py
-      ├─transform.py
-    ├─models
-      ├─model_selector.py
-    ├─utils
-      ├─train_utils.py
-    ├─config.json
-    ├─inference.py
-    ├─inference.sh
-    ├─train.py
-    ├─train.sh
+  ├─.github
+  ├─Models : final model code
+    ├─0925_kfold_coatnet
+    ├─0925_kfold_vit
+    ├─0926_ensemble
   ├─README.md
 ```
 ## [4] Project Workflow
