@@ -30,10 +30,41 @@
 ## [3] File Tree
 ```
   ├─.github
-  ├─Models : final model code
-    ├─0925_kfold_coatnet
-    ├─0925_kfold_vit
-    ├─0926_ensemble
+  ├─Models
+  ├─ 0925_kfold_coatnet
+  │  ├─ datasets
+  │  │  ├─ custom_dataset.py
+  │  │  └─ transform.py
+  │  ├─ ensemble
+  │  │  ├─ ensemble0.json
+  │  │  └─ ensemble2.json
+  │  ├─ ensemble.sh
+  │  ├─ ex.sh
+  │  ├─ exp
+  │  │  ├─ exp0.json
+  │  │  ├─ exp1.json
+  │  │  ├─ exp2.json
+  │  │  ├─ exp3.json
+  │  │  └─ exp4.json
+  │  ├─ inference.py
+  │  ├─ inference.sh
+  │  ├─ inference_ensemble.py
+  │  ├─ main.py
+  │  ├─ models
+  │  │  └─ model_selector.py
+  │  ├─ train.py
+  │  └─ utils
+  │     ├─ getPretrainedModels.py
+  │     ├─ parameter.py
+  │     ├─ train_utils.py
+  │     └─ utils.py
+  └─ 0926_ensemble
+     ├─ datasets
+     │  ├─ custom_dataset.py
+     │  └─ transform.py
+     └─ ensemble
+        ├─ ensemble1.json
+        └─ inference_ensemble.py
   ├─README.md
 ```
 ## [4] Project Workflow
