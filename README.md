@@ -75,22 +75,30 @@
   <h3>럭키비키🍀</h3>
   <table>
     <tr>
-      <td align="center" valign="top" width="15%"><a href="https://github.com/jinlee24"><img src="https://avatars.githubusercontent.com/u/137850412?v=4" ></a>이동진</td>
-      <td align="center" valign="top" width="15%"><a href="https://github.com/stop0729"><img src="https://avatars.githubusercontent.com/u/78136790?v=4" ></a>정지환</td>
-      <td align="center" valign="top" width="15%"><a href="https://github.com/yjs616"><img src="https://avatars.githubusercontent.com/u/107312651?v=4" ></a>유정선</td>
-      <td align="center" valign="top" width="15%"><a href="https://github.com/sng-tory"><img src="https://avatars.githubusercontent.com/u/176906855?v=4" ></a>신승철</td>
-      <td align="center" valign="top" width="15%"><a href="https://github.com/Soojeoong"><img src="https://avatars.githubusercontent.com/u/100748928?v=4" ></a>김소정</td>
-      <td align="center" valign="top" width="15%"><a href="https://github.com/cyndii20"><img src="https://avatars.githubusercontent.com/u/90389093?v=4"></a>서정연</td>
+      <td align="center" valign="top" width="150px"><a href="https://github.com/jinlee24"><img src="https://avatars.githubusercontent.com/u/137850412?v=4"></a></td>
+      <td align="center" valign="top" width="100px"><a href="https://github.com/stop0729"><img src="https://avatars.githubusercontent.com/u/78136790?v=4"></a></td>
+      <td align="center" valign="top" width="100px"><a href="https://github.com/yjs616"><img src="https://avatars.githubusercontent.com/u/107312651?v=4"></a></td>
+      <td align="center" valign="top" width="100px"><a href="https://github.com/sng-tory"><img src="https://avatars.githubusercontent.com/u/176906855?v=4"></a></td>
+      <td align="center" valign="top" width="100px"><a href="https://github.com/Soojeoong"><img src="https://avatars.githubusercontent.com/u/100748928?v=4"></a></td>
+      <td align="center" valign="top" width="100px"><a href="https://github.com/cyndii20"><img src="https://avatars.githubusercontent.com/u/90389093?v=4"></a></td>
     </tr>
     <tr>
-      <td valign="top"> <!-- 동진 -->
+      <td align="center" valign="top" width="100px">이동진</td>
+      <td align="center" valign="top" width="100px">정지환</td>
+      <td align="center" valign="top" width="100px">유정선</td>
+      <td align="center" valign="top" width="100px">신승철</td>
+      <td align="center" valign="top" width="100px">김소정</td>
+      <td align="center" valign="top" width="100px">서정연</td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="100px"> <!-- 동진 -->
           <ul>
             <li>앙상블</li>
             <li>pseudo labeling</li>
             <li>failure analysis</li>
           </ul>
       </td>
-      <td valign="top"> <!-- 지환 -->
+      <td align="center" valign="top" width="100px"> <!-- 지환 -->
           <ul>
             <li>데이터 전처리</li>
             <li>앙상블</li>
@@ -98,14 +106,14 @@
             <li>하이퍼파라미터 조정</li>
           </ul>
       </td>
-       <td valign="top"> <!-- 정선 -->
+       <td align="center" valign="top" width="100px"> <!-- 정선 -->
           <ul>
             <li>데이터 분석 및 전처리</li>
             <li>data augmentation</li>
             <li>freezing</li>
           </ul>
       </td>
-       <td valign="top"> <!-- 승철 -->
+       <td align="center" valign="top" width="100px"> <!-- 승철 -->
           <ul>
             <li>데이터 전처리</li>
             <li>data augmentation</li>
@@ -113,7 +121,7 @@
             <li>앙상블</li>
           </ul>
       </td>
-       <td valign="top"> <!-- 소정 -->
+       <td align="center" valign="top" width="100px"> <!-- 소정 -->
           <ul>
             <li>프로젝트 스케줄링</li>
             <li>문서화</li>
@@ -122,7 +130,7 @@
             <li>TTA</li>
           </ul>
       </td>
-       <td valign="top"> <!-- 정연 -->
+       <td align="center" valign="top" width="100px"> <!-- 정연 -->
           <ul>
             <li>Data Augmentation</li>
             <li>stratified k-fold</li>
